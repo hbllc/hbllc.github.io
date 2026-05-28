@@ -883,6 +883,21 @@ section {
     border: 2px solid var(--primary-color);
 }
 
+.module-card.ai-module {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.06));
+    border: 2px solid rgba(16, 185, 129, 0.55);
+    border-left-color: #10b981;
+}
+
+.module-card.ai-module .module-header i,
+.module-card.ai-module .module-list li strong {
+    color: #10b981;
+}
+
+.module-card.ai-module .module-list li::before {
+    color: #10b981;
+}
+
 .module-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-md);
@@ -1645,7 +1660,7 @@ img {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--spacing-lg);
     }
-    
+
     .section-title {
         font-size: 2rem;
     }
@@ -1769,7 +1784,7 @@ img {
     .timeline-content {
         padding: var(--spacing-lg);
     }
-    
+
     /* Contact Cards */
     .contact-cards {
         grid-template-columns: 1fr;
@@ -1918,7 +1933,7 @@ img {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
     }
-    
+
     /* Contact */
     .contact-card {
         min-height: 220px;
