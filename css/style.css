@@ -345,11 +345,48 @@ body.light-theme .navbar {
     font-size: 1.125rem;
     color: var(--text-secondary);
     max-width: 800px;
-    margin: 0 auto var(--spacing-xl);
+    margin: 0 auto var(--spacing-lg);
     line-height: 1.9;
     letter-spacing: 0.01em;
     word-break: keep-all;
     word-wrap: break-word;
+}
+
+.hero-proof {
+    max-width: 960px;
+    margin: 0 auto var(--spacing-xl);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.proof-item {
+    padding: var(--spacing-md);
+    background-color: rgba(30, 41, 59, 0.72);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-align: left;
+}
+
+body.light-theme .proof-item {
+    background-color: rgba(249, 250, 251, 0.84);
+}
+
+.proof-label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+}
+
+.proof-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.45;
 }
 
 .hero-social {
@@ -896,6 +933,108 @@ section {
 
 .module-card.ai-module .module-list li::before {
     color: #10b981;
+}
+
+.delivery-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.delivery-item {
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+}
+
+.delivery-item span {
+    display: block;
+    color: #10b981;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+}
+
+.delivery-item strong {
+    display: block;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.fde-panel {
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    border-left: 4px solid #10b981;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.fde-panel-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.fde-panel-header i {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, #10b981, var(--primary-color));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.fde-panel-header span {
+    display: block;
+    color: #10b981;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+}
+
+.fde-panel-header h4 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+}
+
+.fde-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--spacing-sm);
+}
+
+.fde-list li {
+    position: relative;
+    padding-left: var(--spacing-lg);
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-size: 0.95rem;
+}
+
+.fde-list li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: 800;
+}
+
+.fde-list strong {
+    color: var(--text-primary);
 }
 
 .module-card:hover {
@@ -1661,6 +1800,11 @@ img {
         gap: var(--spacing-lg);
     }
 
+    .hero-proof,
+    .delivery-strip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .section-title {
         font-size: 2rem;
     }
@@ -1732,6 +1876,10 @@ img {
         font-size: 1rem;
         padding: 0 var(--spacing-sm);
         line-height: 1.8;
+    }
+
+    .hero-proof {
+        padding: 0 var(--spacing-md);
     }
     
     .hero-actions {
@@ -1932,6 +2080,26 @@ img {
     .arch-details {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+    }
+
+    .hero-proof,
+    .delivery-strip {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .proof-item,
+    .delivery-item,
+    .fde-panel {
+        padding: var(--spacing-sm);
+    }
+
+    .fde-panel-header {
+        align-items: flex-start;
+    }
+
+    .fde-panel-header h4 {
+        font-size: 1.05rem;
     }
 
     /* Contact */
