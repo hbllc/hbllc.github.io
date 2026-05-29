@@ -17,11 +17,11 @@
      --bd-1: #354766;
      --bd-2: #46587f;
 
-     /* 文字 */
-     --tx-0: #f4f7fc;
-     --tx-1: #b3bed2;
+     /* 文字（深色下提升对比度，阅读更舒适） */
+     --tx-0: #f6f8fc;
+     --tx-1: #c3ccdd;
      --tx-2: #7682a880;
-     --tx-mut: #768099;
+     --tx-mut: #8893ab;
 
      /* 强调：克制的钢蓝，仅点睛使用 */
      --ac: #5b8cff;
@@ -277,14 +277,14 @@ img {
      display: inline-flex;
      align-items: center;
      gap: 9px;
-     font-size: 0.94rem;
+     font-size: 0.92rem;
      font-weight: 500;
      font-family: var(--sans);
-     padding: 12px 22px;
+     padding: 11px 20px;
      border-radius: 999px;
      border: 1px solid var(--bd-1);
      background: transparent;
-     color: var(--tx-0);
+     color: var(--tx-1);
      cursor: pointer;
      transition: all 0.22s var(--ease);
 }
@@ -292,19 +292,26 @@ img {
 .btn:hover {
      border-color: var(--bd-2);
      background: var(--bg-1);
+     color: var(--tx-0);
      transform: translateY(-1px);
 }
 
+/* 主按钮：明确的视觉重心，但克制 —— 实心 + 极弱光晕 */
 .btn--primary {
      background: var(--ac);
      border-color: var(--ac);
-     color: #08101f;
-     font-weight: 600;
+     color: #07101f;
+     font-weight: 650;
+     font-size: 0.95rem;
+     padding: 13px 26px;
+     box-shadow: 0 8px 22px -10px rgba(91, 140, 255, 0.7);
 }
 
 .btn--primary:hover {
      background: var(--ac-1);
      border-color: var(--ac-1);
+     color: #07101f;
+     box-shadow: 0 12px 28px -10px rgba(91, 140, 255, 0.8);
 }
 
 .btn i {
@@ -727,28 +734,41 @@ img {
 
 .tl__head {
      display: flex;
-     align-items: baseline;
+     align-items: center;
      flex-wrap: wrap;
-     gap: 6px 14px;
-     margin-bottom: 6px;
+     gap: 8px 12px;
+     margin-bottom: 8px;
 }
 
 .tl__co {
-     font-size: 1.12rem;
-     font-weight: 650;
+     font-size: 1.2rem;
+     font-weight: 700;
+     letter-spacing: -0.01em;
      color: var(--tx-0);
+     transition: color 0.2s var(--ease);
+}
+
+.tl:hover .tl__co {
+     color: var(--ac-1);
 }
 
 .tl__role {
-     font-size: 0.92rem;
-     color: var(--ac-1);
+     font-size: 0.9rem;
+     color: var(--tx-1);
+     padding-left: 12px;
+     border-left: 1px solid var(--bd-1);
 }
 
 .tl__date {
      margin-left: auto;
      font-family: var(--mono);
-     font-size: 0.76rem;
+     font-size: 0.74rem;
+     letter-spacing: 0.02em;
      color: var(--tx-mut);
+     padding: 4px 10px;
+     border: 1px solid var(--bd);
+     border-radius: 999px;
+     background: var(--bg-1);
 }
 
 .tl__desc {
@@ -811,56 +831,84 @@ img {
 .matrix__items {
      display: flex;
      flex-wrap: wrap;
-     gap: 8px;
+     gap: 9px;
 }
 
+/* 主次分明：核心强项实心高亮，其余仅描边弱化，去除"标签堆积感" */
 .matrix__items span {
-     font-size: 0.86rem;
+     font-size: 0.85rem;
+     font-weight: 400;
      color: var(--tx-1);
      padding: 5px 12px;
      border-radius: var(--r-sm);
      border: 1px solid var(--bd);
-     background: var(--bg-2);
+     background: transparent;
 }
 
 .matrix__items span.key {
      color: var(--ac-1);
+     font-weight: 600;
      border-color: var(--ac-line);
      background: var(--ac-soft);
 }
 
 /* ---------------- Contact ---------------- */
 .contact-wrap {
+     position: relative;
      display: grid;
-     grid-template-columns: 1fr auto;
-     gap: 48px;
+     grid-template-columns: 1.1fr auto;
+     gap: 56px;
      align-items: center;
-     border: 1px solid var(--bd);
+     border: 1px solid var(--bd-1);
      border-radius: var(--r-xl);
      background:
-          radial-gradient(120% 140% at 100% 0%, rgba(91, 140, 255, 0.07), transparent 55%),
-          var(--bg-1);
-     padding: 48px;
+          radial-gradient(130% 150% at 100% 0%, rgba(91, 140, 255, 0.10), transparent 52%),
+          linear-gradient(180deg, var(--bg-2), var(--bg-1));
+     box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+     padding: 52px;
+     overflow: hidden;
+}
+
+/* 顶部一道强调高光，强化"收口"仪式感 */
+.contact-wrap::before {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     height: 1px;
+     background: linear-gradient(90deg, transparent, var(--ac-line) 50%, transparent);
+}
+
+.contact-copy .eyebrow {
+     display: block;
+     margin-bottom: 14px;
 }
 
 .contact-wrap h2 {
-     font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+     font-size: clamp(1.7rem, 3.4vw, 2.4rem);
      font-weight: 750;
-     letter-spacing: -0.025em;
+     letter-spacing: -0.02em;
+     line-height: 1.25;
      color: var(--tx-0);
-     margin-bottom: 12px;
+     margin-bottom: 14px;
 }
 
 .contact-wrap p {
      color: var(--tx-1);
-     max-width: 46ch;
+     max-width: 44ch;
+}
+
+.contact-wrap p strong {
+     color: var(--tx-0);
+     font-weight: 600;
 }
 
 .contact-actions {
      display: flex;
      flex-direction: column;
      gap: 12px;
-     min-width: 210px;
+     min-width: 248px;
 }
 
 .contact-actions a,
@@ -871,23 +919,81 @@ img {
 /* ---------------- Footer ---------------- */
 .footer {
      border-top: 1px solid var(--bd);
-     padding: 34px 0 40px;
+     padding: 48px 0 40px;
+     background: linear-gradient(180deg, transparent, rgba(91, 140, 255, 0.03));
 }
 
 .footer__inner {
      max-width: var(--maxw);
      margin: 0 auto;
-     padding: 0 28px;
+     padding: 0 28px 28px;
+     display: flex;
+     justify-content: space-between;
+     align-items: flex-start;
+     flex-wrap: wrap;
+     gap: 24px;
+     border-bottom: 1px solid var(--bd);
+}
+
+.footer__brand {
+     display: flex;
+     flex-direction: column;
+     gap: 4px;
+}
+
+.footer__name {
+     font-size: 1.15rem;
+     font-weight: 700;
+     color: var(--tx-0);
+}
+
+.footer__role {
+     font-size: 0.85rem;
+     color: var(--tx-mut);
+}
+
+.footer__links {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 22px;
+}
+
+.footer__links a {
+     font-size: 0.88rem;
+     color: var(--tx-1);
+     transition: color 0.2s var(--ease);
+}
+
+.footer__links a:hover {
+     color: var(--ac-1);
+}
+
+.footer__bottom {
+     max-width: var(--maxw);
+     margin: 0 auto;
+     padding: 22px 28px 0;
      display: flex;
      justify-content: space-between;
      flex-wrap: wrap;
      gap: 10px;
-     font-size: 0.84rem;
+     font-size: 0.82rem;
      color: var(--tx-mut);
 }
 
-.footer__inner .mono {
-     font-family: var(--mono);
+.footer__top-link {
+     display: inline-flex;
+     align-items: center;
+     gap: 7px;
+     color: var(--tx-mut);
+     transition: color 0.2s var(--ease);
+}
+
+.footer__top-link:hover {
+     color: var(--ac-1);
+}
+
+.footer__top-link i {
+     font-size: 0.78rem;
 }
 
 /* ---------------- WeChat modal ---------------- */
@@ -1387,5 +1493,140 @@ img {
 @media (max-width: 760px) {
      .cap-grid {
           grid-template-columns: 1fr;
+     }
+}
+
+/* ============================================================
+   第二阶段精修 — 代表项目两层阅读结构
+   ============================================================ */
+
+/* 一句话概述：更有力量感 */
+.project__lead {
+     color: var(--tx-0);
+     font-size: 1.1rem;
+     font-weight: 500;
+     line-height: 1.7;
+     margin-bottom: 20px;
+}
+
+/* 扫描层亮点：结果先被看到（轻微 accent 面板） */
+.project__highlights {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 12px 20px;
+     padding: 16px 20px;
+     margin-bottom: 18px;
+     background: rgba(91, 140, 255, 0.05);
+     border: 1px solid var(--bd-1);
+     border-radius: var(--r-md);
+}
+
+.project__highlights li {
+     display: flex;
+     align-items: flex-start;
+     gap: 9px;
+     font-size: 0.92rem;
+     font-weight: 500;
+     color: var(--tx-0);
+     line-height: 1.5;
+}
+
+.project__highlights li::before {
+     content: "✓";
+     color: var(--ac-1);
+     font-weight: 700;
+     font-size: 0.85rem;
+     line-height: 1.6;
+     flex-shrink: 0;
+}
+
+/* 详情层：原生折叠，默认收起，扫描优先 */
+.project__detail {
+     margin-top: 20px;
+     border-top: 1px solid var(--bd);
+}
+
+.project__more {
+     list-style: none;
+     cursor: pointer;
+     display: inline-flex;
+     align-items: center;
+     gap: 10px;
+     font-family: var(--mono);
+     font-size: 0.79rem;
+     letter-spacing: 0.03em;
+     color: var(--tx-mut);
+     padding-top: 16px;
+     transition: color 0.2s var(--ease);
+     user-select: none;
+}
+
+.project__more::-webkit-details-marker {
+     display: none;
+}
+
+.project__more:hover {
+     color: var(--ac-1);
+}
+
+.project__more i {
+     font-size: 0.72rem;
+     transition: transform 0.25s var(--ease);
+}
+
+.project__detail[open] .project__more i {
+     transform: rotate(180deg);
+}
+
+.project__detail .project__grid {
+     margin: 18px 0 0;
+}
+
+@media (max-width: 760px) {
+     .project__highlights {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding: 14px 16px;
+     }
+
+     .project__lead {
+          font-size: 1.02rem;
+     }
+}
+
+/* ============================================================
+   第二阶段精修 — 收尾层次与细节
+   ============================================================ */
+
+/* 后半段背景轻微抬升，避免收尾显平（克制，无夸张光晕） */
+#contact {
+     background: radial-gradient(70% 90% at 50% 130%, rgba(91, 140, 255, 0.055), transparent 60%);
+}
+
+/* details 折叠标记跨浏览器隐藏 */
+.project__more::marker,
+.project__more::-webkit-details-marker {
+     display: none;
+     content: "";
+}
+
+/* 经历模块整体收紧、与时间线呼应 */
+.tl {
+     padding-bottom: 34px;
+}
+
+@media (max-width: 760px) {
+     .contact-copy h2 br {
+          display: none;
+     }
+
+     .footer__inner,
+     .footer__bottom {
+          flex-direction: column;
+     }
+
+     .tl__role {
+          padding-left: 0;
+          border-left: 0;
      }
 }
