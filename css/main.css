@@ -1785,3 +1785,216 @@ img {
           padding: 22px;
      }
 }
+
+/* ============================================================
+   招聘转化定向优化（不改结构/风格，只强化主次与扫描/转化）
+   ============================================================ */
+
+/* ---- P1 · 首屏 CTA 主次 ---- */
+.btn--cta {
+     font-size: 0.98rem;
+     padding: 14px 28px;
+}
+
+.btn--cta .fa-arrow-right {
+     margin-left: 2px;
+     transition: transform 0.22s var(--ease);
+}
+
+.btn--cta:hover .fa-arrow-right {
+     transform: translateX(4px);
+}
+
+/* 次按钮更安静，拉开与主按钮的层级 */
+.btn--ghost {
+     color: var(--tx-mut);
+     border-color: var(--bd);
+}
+
+.btn--ghost:hover {
+     color: var(--tx-0);
+     border-color: var(--bd-2);
+     background: var(--bg-1);
+}
+
+.hero__actions {
+     gap: 12px 14px;
+     align-items: center;
+}
+
+/* ---- P2 · 代表项目：结果优先、可扫描 ---- */
+.projects {
+     counter-reset: proj;
+}
+
+.project {
+     counter-increment: proj;
+}
+
+/* 项目编号 + 更大的标题，提升抓眼与扫描 */
+.project__name {
+     font-size: 1.55rem;
+}
+
+.project__name::before {
+     content: counter(proj, decimal-leading-zero);
+     margin-right: 14px;
+     font-family: var(--mono);
+     font-size: 0.82rem;
+     font-weight: 500;
+     color: var(--ac);
+     vertical-align: 3px;
+}
+
+/* 技术栈收敛，不与亮点结果争视觉 */
+.project .stack span {
+     color: var(--tx-mut);
+     background: transparent;
+     border-color: var(--bd);
+     font-size: 0.72rem;
+}
+
+/* 亮点结果更突出（扫描层的"payoff"） */
+.project__highlights {
+     gap: 12px 22px;
+}
+
+.project__highlights li {
+     font-size: 0.94rem;
+     font-weight: 600;
+}
+
+/* 展开入口做成清晰的"控件"，而非一行文字 */
+.project__detail {
+     border-top: 0;
+     margin-top: 20px;
+}
+
+.project__more {
+     width: fit-content;
+     padding: 9px 16px;
+     border: 1px solid var(--bd-1);
+     border-radius: 999px;
+     background: var(--bg-2);
+}
+
+.project__more:hover {
+     border-color: var(--ac-line);
+     background: var(--ac-soft);
+}
+
+/* ---- P3 · 工作经历：结果可扫 ---- */
+.tl__desc strong {
+     color: var(--ac-1);
+}
+
+/* ---- P3 · 联系区：明确收口、主行动突出 ---- */
+.contact-actions .btn:not(.btn--primary) {
+     color: var(--tx-1);
+     border-color: var(--bd-1);
+}
+
+.contact-actions .btn--primary {
+     padding: 14px 24px;
+}
+
+/* ---- P4 · 能力版图：减少名词堆积，强化结构与说明 ---- */
+.matrix {
+     gap: 22px 20px;
+}
+
+.matrix__note {
+     color: var(--tx-1);
+     font-size: 0.9rem;
+     margin: -2px 0 16px;
+}
+
+.matrix__items span:not(.key) {
+     font-size: 0.82rem;
+     color: var(--tx-mut);
+     border-color: var(--bd);
+}
+
+/* ---- P5 · Forward Deployed / 工作方式：差异化名片 ---- */
+.workstyle {
+     padding: 28px 32px 32px;
+     border-color: var(--bd-1);
+     position: relative;
+}
+
+.workstyle__label {
+     font-size: 0.82rem;
+     color: var(--ac-1);
+     border-bottom: 0;
+     padding-bottom: 0;
+     margin-bottom: 10px;
+}
+
+.workstyle__sub {
+     font-size: 1.04rem;
+     font-weight: 500;
+     line-height: 1.6;
+     color: var(--tx-0);
+     max-width: 62ch;
+     padding-bottom: 24px;
+     margin-bottom: 26px;
+     border-bottom: 1px solid var(--bd);
+}
+
+/* 四步编号，体现"现场→表达→设计→交付"的推进流向 */
+.workstyle__grid {
+     counter-reset: ws;
+}
+
+.ws {
+     counter-increment: ws;
+}
+
+.ws h4::before {
+     content: counter(ws, decimal-leading-zero);
+     width: auto;
+     height: auto;
+     background: none;
+     border-radius: 0;
+     margin-right: 10px;
+     font-family: var(--mono);
+     font-size: 0.78rem;
+     font-weight: 500;
+     color: var(--ac);
+     vertical-align: baseline;
+}
+
+@media (max-width: 760px) {
+     .workstyle {
+          padding: 24px 22px 26px;
+     }
+}
+
+/* ============================================================
+   收口轮 — 招聘方体验最后精修
+   ============================================================ */
+
+/* 强调型次按钮：联系区第二动作（下载简历），层级介于主按钮与 ghost 之间 */
+.btn--accent {
+     color: var(--ac-1);
+     border-color: var(--ac-line);
+     background: var(--ac-soft);
+}
+
+.btn--accent:hover {
+     color: var(--ac-1);
+     border-color: var(--ac);
+     background: rgba(91, 140, 255, 0.15);
+     transform: translateY(-1px);
+}
+
+/* 项目亮点面板左缘加一道强调线，第一眼锚定"结果" */
+.project__highlights {
+     border-left: 2px solid var(--ac);
+     padding-left: 18px;
+}
+
+/* 联系区行动按钮：撑满列宽、对齐统一，转化梯度更清晰 */
+.contact-actions .btn {
+     width: 100%;
+}
