@@ -1630,3 +1630,158 @@ img {
           border-left: 0;
      }
 }
+
+/* ============================================================
+   FDE · 工作方式（软实力以具体行为呈现）
+   ============================================================ */
+.workstyle {
+     margin-top: 18px;
+     border: 1px solid var(--bd);
+     border-radius: var(--r-md);
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1) 70%);
+     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+     padding: 24px 30px 30px;
+}
+
+.workstyle__label {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     font-family: var(--mono);
+     font-size: 0.78rem;
+     text-transform: uppercase;
+     letter-spacing: 0.08em;
+     color: var(--ac);
+     padding-bottom: 18px;
+     margin-bottom: 22px;
+     border-bottom: 1px solid var(--bd);
+}
+
+.workstyle__grid {
+     display: grid;
+     grid-template-columns: repeat(4, 1fr);
+     gap: 28px;
+}
+
+.ws h4 {
+     font-size: 0.96rem;
+     font-weight: 650;
+     color: var(--tx-0);
+     margin-bottom: 8px;
+}
+
+.ws h4::before {
+     content: "";
+     display: inline-block;
+     width: 6px;
+     height: 6px;
+     border-radius: 2px;
+     background: var(--ac);
+     margin-right: 9px;
+     vertical-align: middle;
+}
+
+.ws p {
+     font-size: 0.86rem;
+     line-height: 1.7;
+     color: var(--tx-1);
+}
+
+@media (max-width: 760px) {
+     .workstyle {
+          padding: 22px 22px 24px;
+     }
+
+     .workstyle__grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 20px 18px;
+     }
+}
+
+@media (max-width: 480px) {
+     .workstyle__grid {
+          grid-template-columns: 1fr;
+     }
+}
+
+/* ============================================================
+   早期项目 — 轻量卡（次级层，统一但分主次）
+   ============================================================ */
+.tier-label {
+     display: flex;
+     align-items: center;
+     gap: 16px;
+     margin: 44px 0 20px;
+     font-family: var(--mono);
+     font-size: 0.8rem;
+     letter-spacing: 0.08em;
+     text-transform: uppercase;
+     color: var(--tx-mut);
+}
+
+.tier-label::after {
+     content: "";
+     flex: 1;
+     height: 1px;
+     background: var(--bd);
+}
+
+.mini-grid {
+     display: grid;
+     grid-template-columns: repeat(2, 1fr);
+     gap: 16px;
+}
+
+.mini {
+     border: 1px solid var(--bd);
+     border-radius: var(--r-md);
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1) 65%);
+     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+     padding: 24px 26px;
+     transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.mini:hover {
+     border-color: var(--bd-2);
+     transform: translateY(-2px);
+}
+
+.mini__h {
+     margin-bottom: 12px;
+}
+
+.mini__name {
+     font-size: 1.12rem;
+     font-weight: 700;
+     letter-spacing: -0.01em;
+     color: var(--tx-0);
+}
+
+.mini__co {
+     display: block;
+     margin-top: 3px;
+     font-size: 0.82rem;
+     color: var(--ac-1);
+}
+
+.mini__desc {
+     font-size: 0.92rem;
+     line-height: 1.72;
+     color: var(--tx-1);
+     margin-bottom: 16px;
+}
+
+.mini__desc strong {
+     color: var(--tx-0);
+     font-weight: 600;
+}
+
+@media (max-width: 760px) {
+     .mini-grid {
+          grid-template-columns: 1fr;
+     }
+
+     .mini {
+          padding: 22px;
+     }
+}

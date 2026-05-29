@@ -18,3 +18,9 @@ npm-debug.log*
 *.tmp
 *.temp
 
+
+# 本地简历打印模板（含手机号，不公开）
+resume.html
+
+# 原始素材笔记（不公开）
+项目经历.txt
