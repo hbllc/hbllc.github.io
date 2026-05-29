@@ -2138,3 +2138,86 @@ img {
         font-size: 1rem;
     }
 }
+
+/* ===== 打印 / 存为PDF 样式 ===== */
+@media print {
+
+    /* 强制亮色背景、黑字，节省墨水并提升可读性 */
+    :root {
+        --bg-primary: #ffffff;
+        --bg-secondary: #ffffff;
+        --bg-tertiary: #f5f5f5;
+        --text-primary: #111111;
+        --text-secondary: #333333;
+        --text-muted: #555555;
+        --border-color: #cccccc;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #111111 !important;
+    }
+
+    /* 隐藏交互/导航类元素 */
+    .navbar,
+    .nav-toggle,
+    .theme-toggle,
+    .scroll-top,
+    .hero-actions,
+    .hero-social,
+    .qr-modal,
+    .footer .footer-subtitle {
+        display: none !important;
+    }
+
+    /* 去掉动效与阴影，避免打印异常 */
+    * {
+        animation: none !important;
+        transition: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        background-image: none !important;
+    }
+
+    section {
+        padding: 16px 0 !important;
+        page-break-inside: avoid;
+    }
+
+    .hero {
+        min-height: auto !important;
+        padding-top: 24px !important;
+    }
+
+    .hero-bg {
+        display: none !important;
+    }
+
+    /* 渐变文字在打印时变透明，强制为黑色 */
+    .title-name,
+    .section-title,
+    .stat-value {
+        -webkit-text-fill-color: #111111 !important;
+        color: #111111 !important;
+        background: none !important;
+    }
+
+    /* 时间轴每段尽量不被分页截断 */
+    .timeline-item,
+    .module-card,
+    .skill-category,
+    .about-education,
+    .responsibility-item {
+        page-break-inside: avoid;
+    }
+
+    a {
+        color: #111111 !important;
+        text-decoration: none !important;
+    }
+
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}
