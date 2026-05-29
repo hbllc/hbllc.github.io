@@ -3,839 +3,347 @@
 
 <head>
      <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-     <meta name="description" content="李立川 - 金融科技架构师、AI Engineer、Forward Deployed Engineer，专注企业级AI生产力平台与复杂业务系统工程化">
-     <meta name="keywords" content="李立川,架构师,AI Engineer,FDE,Java,微服务,AI Agent,金融科技,生产力平台">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description"
+          content="李立川 — 金融科技架构师 / AI Engineer。11年工作经验，专注交易所核心系统、分布式架构与 AI Agent 工程化落地。">
+     <meta name="keywords" content="李立川,Java架构师,AI Engineer,FDE,交易所系统,微服务,AI Agent,A2A,金融科技">
      <meta name="author" content="李立川">
-     <title>李立川 - 金融科技架构师 | AI Engineer | FDE</title>
+     <title>李立川 · 金融科技架构师 / AI Engineer</title>
 
-     <!-- Favicon -->
      <link rel="icon"
           href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
 
-     <!-- Font Awesome -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-     <!-- Google Fonts -->
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
           rel="stylesheet">
 
-     <!-- Custom CSS -->
-     <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
-     <!-- Navigation -->
-     <nav class="navbar" id="navbar">
-          <div class="container">
-               <div class="nav-brand">
-                    <span class="brand-text">李立川</span>
-                    <span class="brand-tag">AI Engineer</span>
-               </div>
-               <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-               </button>
-               <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home" class="nav-link active">首页</a></li>
-                    <li><a href="#about" class="nav-link">关于</a></li>
-                    <li><a href="#experience" class="nav-link">经历</a></li>
-                    <li><a href="#skills" class="nav-link">技能</a></li>
-                    <li><a href="#contact" class="nav-link">联系</a></li>
-                    <li>
-                         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                              <i class="fas fa-moon"></i>
-                         </button>
-                    </li>
-               </ul>
-          </div>
-     </nav>
+<body id="top">
+     <div class="shell">
 
-     <!-- Hero Section -->
-     <section id="home" class="hero">
-          <div class="hero-bg"></div>
-          <div class="container">
-               <div class="hero-content">
-                    <div class="hero-avatar">
-                         <div class="avatar-placeholder">
-                              <i class="fas fa-user"></i>
-                         </div>
-                    </div>
-                    <h1 class="hero-title">
-                         <span class="title-greeting">你好，我是</span>
-                         <span class="title-name">李立川</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                         <span class="typing-cursor">金融科技架构师 | AI Engineer | Forward Deployed Engineer</span>
+          <!-- ============ LEFT: sticky card ============ -->
+          <aside class="side">
+               <div class="side__top">
+                    <h1 class="side__name">李立川</h1>
+                    <p class="side__role">金融科技架构师 / AI Engineer</p>
+                    <p class="side__tagline">
+                         把 <span class="accent">AI Agent</span> 部署进真实业务流程 —— 不止做一个聊天入口，而是打通业务系统、交付可确认可执行的闭环。
                     </p>
-                    <p class="hero-description">
-                         11年大厂经验 · 专注分布式系统、金融科技与AI应用工程化 · 目前在滴灌通负责供应链金融平台架构设计
-                         <br>
-                         能深入业务现场定义问题，将 Agent、LLM、IM、任务流和业务系统打通，交付可落地、可确认、可执行的AI工作流
-                    </p>
-                    <div class="hero-proof">
-                         <div class="proof-item">
-                              <span class="proof-label">核心定位</span>
-                              <strong>复杂业务系统架构师</strong>
-                         </div>
-                         <div class="proof-item">
-                              <span class="proof-label">行业经验</span>
-                              <strong>金融科技 · 交易 · 供应链</strong>
-                         </div>
-                         <div class="proof-item">
-                              <span class="proof-label">AI方向</span>
-                              <strong>Agent工作流工程化</strong>
-                         </div>
-                         <div class="proof-item">
-                              <span class="proof-label">交付方式</span>
-                              <strong>FDE式现场交付</strong>
-                         </div>
-                    </div>
-                    <div class="hero-social">
-                         <a href="mailto:li_lichuan@126.com" class="hero-contact-btn">
-                              <i class="fas fa-envelope"></i>
-                              邮件
-                         </a>
-                         <a href="https://github.com/hbllc" target="_blank" rel="noopener" class="hero-contact-btn">
-                              <i class="fab fa-github"></i>
-                              GitHub
-                         </a>
-                         <button class="hero-contact-btn" id="showWechatQRHero">
-                              <i class="fab fa-weixin"></i>
-                              微信
-                         </button>
-                    </div>
-                    <div class="hero-actions">
-                         <a href="#experience" class="btn btn-primary">
-                              <i class="fas fa-briefcase"></i>
-                              查看工作经历
-                         </a>
-                         <a href="#skills" class="btn btn-secondary">
-                              <i class="fas fa-code"></i>
-                              技术栈
-                         </a>
-                    </div>
-               </div>
-          </div>
-     </section>
+                    <p class="side__meta">11 年经验 · 交易所核心系统 · 多智能体平台 · FDE</p>
 
-     <!-- About Section -->
-     <section id="about" class="about">
-          <div class="container">
-               <div class="section-header">
-                    <span class="section-tag">About Me</span>
-                    <h2 class="section-title">关于我</h2>
-                    <p class="section-subtitle">技术驱动业务，架构赋能创新</p>
+                    <nav>
+                         <ul class="nav-v">
+                              <li><a href="#about" class="nav-link">关于</a></li>
+                              <li><a href="#experience" class="nav-link">经历</a></li>
+                              <li><a href="#work" class="nav-link">项目</a></li>
+                              <li><a href="#skills" class="nav-link">技能</a></li>
+                              <li><a href="#contact" class="nav-link">联系</a></li>
+                         </ul>
+                    </nav>
                </div>
-               <div class="about-content">
-                    <!-- 第一行：个人介绍文字 -->
-                    <div class="about-intro">
+
+               <div class="side__bottom">
+                    <div class="socials">
+                         <a href="https://github.com/hbllc" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                         <a href="mailto:li_lichuan@126.com" aria-label="邮箱"><i class="fas fa-envelope"></i></a>
+                         <button class="socials-btn" id="wechatBtn" aria-label="微信"
+                              style="background:none;border:0;cursor:pointer;color:inherit;font-size:1.35rem;padding:0;"><i
+                                   class="fab fa-weixin"></i></button>
+                    </div>
+                    <a href="李立川-简历.pdf" download class="resume-link">
+                         <i class="fas fa-file-arrow-down"></i> 下载简历 PDF
+                    </a>
+               </div>
+          </aside>
+
+          <!-- ============ RIGHT: content ============ -->
+          <main class="main">
+
+               <!-- About -->
+               <section class="block" id="about">
+                    <div class="block__sticky">关于</div>
+                    <p class="block__label">关于</p>
+                    <div class="prose">
                          <p>
-                              我是<strong>李立川</strong>，滴灌通技术团队的一名<strong>架构师</strong>，拥有<strong>11年</strong>大厂工作经验。
-                              毕业于<strong>西北工业大学软件工程专业</strong>，从初级开发工程师成长为架构师，
-                              先后在嘉联支付、顺丰科技、华锐金融、阿里巴巴等知名企业工作，目前在滴灌通负责供应链金融平台的核心架构设计。
+                              我从一线 Java 开发成长为资深架构师，在<strong>交易、支付、风控、清结算</strong>等金融核心领域做了 11 年——
+                              先后在嘉联支付、顺丰科技、华锐金融、菜鸟网络工作，目前在<strong>滴灌通</strong>担任资深 Java 专家 / 技术负责人。
                          </p>
                          <p>
-                              在滴灌通，我主导了<strong>供应链金融平台</strong>的整体架构设计，包括资产端、资金端、交易所三大核心业务板块。
-                              通过微服务架构和分布式系统设计，构建了支撑千亿级资金流转的金融科技平台。
-                              精通<strong>Java微服务架构</strong>、<strong>分布式系统设计</strong>，擅长使用Spring Cloud、Dubbo等主流技术栈，
-                              在交易撮合、清算结算、风险控制等核心领域积累了丰富的实战经验。
+                              在滴灌通，我主导了<span class="hl">交易所 2.0 系统</span>的架构设计与实现，完成 SPV / SPAC / ETF 等多类金融产品落地，
+                              负责账户体系与清算核心系统重构，支撑平台亿级资产规模、线上零故障。
                          </p>
                          <p>
-                              近年来，我积极拥抱<strong>AI技术</strong>，深入研究<strong>大模型应用工程化</strong>、
-                              <strong>AI Agent架构</strong>、<strong>上下文工程</strong>与<strong>工具调用</strong>，
-                              具备将大模型能力落地到企业业务系统中的经验，能够设计Agent能力边界、上下文管理、安全确认和业务执行闭环。
-                              我相信，<strong>技术应该服务于业务目标</strong>，通过架构创新推动业务增长，用工程化思维解决复杂问题。
+                              近两年我把多年系统工程经验投入 AI 方向：用 <span class="hl">LangGraph</span> 构建智能投融资分析，
+                              并主导建设 <span class="hl">AIWS 多智能体协作平台</span>（AgentScope + A2A 协议），
+                              把大模型能力真正落到企业的真实工作流里——可理解、可确认、可执行。
                          </p>
                     </div>
+               </section>
 
-                    <!-- 第二行：核心优势 -->
-                    <div class="about-highlights">
-                         <div class="highlight-item">
-                              <div class="highlight-icon">
-                                   <i class="fas fa-layer-group"></i>
-                              </div>
-                              <div class="highlight-content">
-                                   <h3>技术广度</h3>
-                                   <p>精通Java、Python、Go多语言开发，熟悉微服务、分布式、云原生等多种架构模式</p>
-                              </div>
-                         </div>
-                         <div class="highlight-item">
-                              <div class="highlight-icon">
-                                   <i class="fas fa-robot"></i>
-                              </div>
-                              <div class="highlight-content">
-                                   <h3>AI工程化</h3>
-                                   <p>设计Agent协作、Prompt/Context Engineering、Tool Calling与Human-in-the-loop执行闭环</p>
-                              </div>
-                         </div>
-                         <div class="highlight-item">
-                              <div class="highlight-icon">
-                                   <i class="fas fa-chart-line"></i>
-                              </div>
-                              <div class="highlight-content">
-                                   <h3>FDE交付</h3>
-                                   <p>贴近业务现场定义真实问题，快速完成原型、架构、集成、联调和上线验证</p>
-                              </div>
-                         </div>
-                    </div>
+               <!-- Experience -->
+               <section class="block" id="experience">
+                    <div class="block__sticky">经历</div>
+                    <p class="block__label">工作经历</p>
+                    <div class="list">
 
-                    <!-- 第三行：统计数据 -->
-                    <div class="about-stats">
-                         <div class="stat-card">
-                              <div class="stat-icon">
-                                   <i class="fas fa-calendar-alt"></i>
-                              </div>
-                              <div class="stat-value" data-target="11">0</div>
-                              <div class="stat-label">年工作经验</div>
-                         </div>
-                         <div class="stat-card">
-                              <div class="stat-icon">
-                                   <i class="fas fa-building"></i>
-                              </div>
-                              <div class="stat-value" data-target="5">0</div>
-                              <div class="stat-label">家公司</div>
-                         </div>
-                         <div class="stat-card">
-                              <div class="stat-icon">
-                                   <i class="fas fa-code"></i>
-                              </div>
-                              <div class="stat-value" data-target="3">0</div>
-                              <div class="stat-label">条核心业务线</div>
-                         </div>
-                         <div class="stat-card">
-                              <div class="stat-icon">
-                                   <i class="fas fa-robot"></i>
-                              </div>
-                              <div class="stat-value" data-target="1">0</div>
-                              <div class="stat-label">个AI生产力平台</div>
-                         </div>
-                    </div>
-               </div>
-          </div>
-          </div>
-     </section>
-
-     <!-- Experience Section -->
-     <section id="experience" class="experience">
-          <div class="container">
-               <div class="section-header">
-                    <span class="section-tag">Career Path</span>
-                    <h2 class="section-title">工作经历</h2>
-                    <p class="section-subtitle">从支付到物流，从金融到供应链的技术探索之旅</p>
-               </div>
-               <div class="timeline">
-
-                    <!-- 滴灌通 - 重点展示 -->
-                    <div class="timeline-item featured" data-aos="fade-up">
-                         <div class="timeline-marker"></div>
-                         <div class="timeline-content">
-                              <div class="timeline-header">
-                                   <div class="timeline-company">
-                                        <div class="company-logo">
-                                             <i class="fas fa-building"></i>
-                                        </div>
-                                        <div class="company-info">
-                                             <h3>滴灌通</h3>
-                                             <span class="company-field">供应链金融科技</span>
-                                        </div>
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">2023.06<br>— 至今</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">滴灌通</h3>
+                                        <span class="item__role">资深 Java 专家 / 技术负责人</span>
+                                        <span class="item__badge">当前</span>
                                    </div>
-                                   <div class="timeline-meta">
-                                        <span class="timeline-date">
-                                             <i class="fas fa-calendar"></i>
-                                             2023年 - 至今
-                                        </span>
-                                        <span class="timeline-position">架构师</span>
-                                        <span class="timeline-badge featured-badge">当前就职</span>
-                                   </div>
-                              </div>
-
-                              <div class="timeline-description">
-                                   <p class="lead-text">
-                                        在滴灌通，我主导了<strong>供应链金融平台</strong>的整体架构设计与核心系统研发，
-                                        负责<strong>资产端、资金端、交易所</strong>三大核心业务板块的技术实现，并推进内部<strong>AI生产力系统</strong>建设。
-                                        通过微服务架构、分布式系统设计与AI应用工程化，构建支撑金融业务运行和团队协作效率提升的企业级平台。
+                                   <p class="item__desc">
+                                        作为技术 Owner，主导<strong>交易所 2.0 系统</strong>架构与清算核心重构，支撑亿级资产规模；
+                                        推进 AI 应用工程化（LangGraph 智能投融资分析 + AIWS 多智能体协作平台），成功交付 4 个核心生产系统。
                                    </p>
-
-                                   <!-- 核心业务与AI能力 -->
-                                   <div class="business-modules">
-                                        <div class="module-card highlight primary module-full-width">
-                                             <div class="module-header">
-                                                  <i class="fas fa-exchange-alt"></i>
-                                                  <h4>交易所系统（核心重点）</h4>
-                                             </div>
-                                             <ul class="module-list">
-                                                  <li><strong>产品支持</strong>：支持DRO（每日收入分成凭证）、RBO（收入分成凭证）、SPV（单一资产融资载体）、SPAC（特定资产组合投资载体）、ETF（交易所指数交易载体）等多种金融产品的交易与管理
-                                                  </li>
-                                                  <li><strong>撮合引擎</strong>：自主研发高性能撮合引擎，支持多产品类型实时撮合，处理能力达10万笔/秒</li>
-                                                  <li><strong>清算结算</strong>：设计T+0/T+1清算结算系统，确保资金流转安全可靠，支持多币种结算</li>
-                                                  <li><strong>运营后台</strong>：构建交易运营管理平台，涵盖产品配置、交易监控、报表统计、风险管控等功能</li>
-                                             </ul>
-                                        </div>
-
-                                        <div class="module-card highlight ai-module module-full-width">
-                                             <div class="module-header">
-                                                  <i class="fas fa-robot"></i>
-                                                  <h4>AI协作与生产力平台</h4>
-                                             </div>
-                                             <ul class="module-list">
-                                                  <li><strong>协作场景落地</strong>：围绕滴灌通内部群聊协作、任务跟进和业务执行场景，将AI能力嵌入真实工作流，而不是停留在单独聊天入口</li>
-                                                  <li><strong>Agent能力体系</strong>：设计SuperAgent、任务助手、业务智能体等角色协同机制，将智能体能力沉淀为可复用平台能力</li>
-                                                  <li><strong>IM与任务闭环</strong>：打通群聊上下文与任务系统，支持@任务助手生成任务草稿、人工确认后创建任务并追踪进展</li>
-                                                  <li><strong>上下文与执行安全</strong>：构建群聊上下文压缩、历史摘要融合、工具调用和Human-in-the-loop确认机制，保证AI建议可理解、可确认、可执行</li>
-                                             </ul>
-                                        </div>
-
-                                        <div class="delivery-strip module-full-width">
-                                             <div class="delivery-item">
-                                                  <span>业务现场</span>
-                                                  <strong>从群聊讨论后的任务沉淀成本高切入</strong>
-                                             </div>
-                                             <div class="delivery-item">
-                                                  <span>共定义问题</span>
-                                                  <strong>和使用场景一起拆解任务助手边界</strong>
-                                             </div>
-                                             <div class="delivery-item">
-                                                  <span>原型到集成</span>
-                                                  <strong>打通IM、任务、组织数据和LLM调用链路</strong>
-                                             </div>
-                                             <div class="delivery-item">
-                                                  <span>迭代交付</span>
-                                                  <strong>用确认卡片和任务闭环验证真实可用性</strong>
-                                             </div>
-                                        </div>
-
-                                        <div class="fde-panel module-full-width">
-                                             <div class="fde-panel-header">
-                                                  <i class="fas fa-compass"></i>
-                                                  <div>
-                                                       <span>Forward Deployed Engineering</span>
-                                                       <h4>把AI能力部署到真实业务流程中</h4>
-                                                  </div>
-                                             </div>
-                                             <ul class="fde-list">
-                                                  <li><strong>不是做一个AI Chat入口</strong>，而是进入IM群聊、任务创建、人员协作、确认执行这些真实工作路径。</li>
-                                                  <li><strong>不是只交付后端接口</strong>，而是从需求澄清、交互原型、Agent能力边界、前后端实现到联调验证一体推进。</li>
-                                                  <li><strong>不是让模型直接替人决策</strong>，而是通过Human-in-the-loop确认机制，把AI建议转化为可审查、可追踪的业务动作。</li>
-                                             </ul>
-                                        </div>
-
-                                        <div class="module-card highlight">
-                                             <div class="module-header">
-                                                  <i class="fas fa-cube"></i>
-                                                  <h4>资产端系统</h4>
-                                             </div>
-                                             <ul class="module-list">
-                                                  <li><strong>全流程系统</strong>：设计资产全生命周期管理系统，覆盖资产录入、审核、评估、放款、回款全流程</li>
-                                                  <li><strong>采购系统</strong>：开发供应链采购管理平台，实现采购订单、合同、发票、物流全链路数字化</li>
-                                                  <li><strong>资产管理平台</strong>：构建资产池管理、资产包打包、资产证券化等核心功能</li>
-                                                  <li><strong>供应链金融</strong>：实现应收账款融资、库存融资、订单融资等多种金融产品</li>
-                                             </ul>
-                                        </div>
-
-                                        <div class="module-card highlight">
-                                             <div class="module-header">
-                                                  <i class="fas fa-wallet"></i>
-                                                  <h4>资金端系统</h4>
-                                             </div>
-                                             <ul class="module-list">
-                                                  <li><strong>投后管理系统</strong>：设计投资组合管理、风险监控、收益分析等核心模块</li>
-                                                  <li><strong>资金管控</strong>：实现资金计划、资金调度、流动性管理功能</li>
-                                                  <li><strong>风险预警</strong>：构建实时风险监控体系，支持多维度风险指标分析</li>
-                                                  <li><strong>投资决策</strong>：开发投资决策支持系统，提供数据分析和智能推荐</li>
-                                             </ul>
-                                        </div>
-                                   </div>
-
-                                   <!-- 核心职责 -->
-                                   <div class="responsibilities">
-                                        <h4><i class="fas fa-tasks"></i> 核心职责与成就</h4>
-                                        <div class="responsibility-grid">
-                                             <div class="responsibility-item">
-                                                  <i class="fas fa-sitemap"></i>
-                                                  <div>
-                                                       <strong>架构设计</strong>
-                                                       <p>主导供应链金融平台整体架构设计，采用微服务架构，实现业务模块解耦和快速迭代</p>
-                                                  </div>
-                                             </div>
-                                             <div class="responsibility-item">
-                                                  <i class="fas fa-rocket"></i>
-                                                  <div>
-                                                       <strong>性能优化</strong>
-                                                       <p>优化系统性能，交易处理能力提升<strong>300%</strong>，撮合引擎响应时间降至<strong>毫秒级</strong>
-                                                       </p>
-                                                  </div>
-                                             </div>
-                                             <div class="responsibility-item">
-                                                  <i class="fas fa-shield-alt"></i>
-                                                  <div>
-                                                       <strong>安全合规</strong>
-                                                       <p>建立完善的安全防护体系，通过等保三级认证，确保金融交易安全</p>
-                                                  </div>
-                                             </div>
-                                             <div class="responsibility-item">
-                                                  <i class="fas fa-chart-line"></i>
-                                                  <div>
-                                                       <strong>业务增长</strong>
-                                                       <p>交易运营效率提升<strong>50%</strong>，支撑平台交易额突破<strong>百亿</strong>规模
-                                                       </p>
-                                                  </div>
-                                             </div>
-                                             <div class="responsibility-item">
-                                                  <i class="fas fa-users"></i>
-                                                  <div>
-                                                       <strong>团队协作</strong>
-                                                       <p>带领技术团队完成核心系统研发，指导团队成员技术成长</p>
-                                                  </div>
-                                             </div>
-                                             <div class="responsibility-item">
-                                                  <i class="fas fa-cogs"></i>
-                                                  <div>
-                                                       <strong>AI工程化</strong>
-                                                       <p>将Agent、LLM、IM、任务流和组织数据打通，形成从自然语言理解到人工确认执行的业务闭环</p>
-                                                  </div>
-                                             </div>
-                                        </div>
-                                   </div>
-
-                                   <!-- 技术架构 -->
-                                   <div class="tech-architecture">
-                                        <h4><i class="fas fa-layer-group"></i> 技术架构与实现</h4>
-                                        <div class="arch-details">
-                                             <div class="arch-item">
-                                                  <strong>微服务架构</strong>
-                                                  <p>Spring Cloud Alibaba全家桶：Nacos注册中心、Sentinel流控熔断、Seata分布式事务</p>
-                                             </div>
-                                             <div class="arch-item">
-                                                  <strong>高性能撮合</strong>
-                                                  <p>内存撮合引擎 + Redis缓存，支持多种撮合算法（价格优先、时间优先、数量优先）</p>
-                                             </div>
-                                             <div class="arch-item">
-                                                  <strong>消息驱动</strong>
-                                                  <p>Kafka异步解耦业务流程，实现事件溯源和最终一致性</p>
-                                             </div>
-                                             <div class="arch-item">
-                                                  <strong>分布式事务</strong>
-                                                  <p>Seata AT模式保证跨服务交易一致性，TCC模式应对复杂业务场景</p>
-                                             </div>
-                                             <div class="arch-item">
-                                                  <strong>全链路监控</strong>
-                                                  <p>SkyWalking分布式追踪 + Prometheus监控 + Grafana可视化</p>
-                                             </div>
-                                             <div class="arch-item">
-                                                  <strong>数据库设计</strong>
-                                                  <p>MySQL主从架构 + 分库分表，Redis集群缓存，Elasticsearch日志分析</p>
-                                             </div>
-                                             <div class="arch-item">
-                                                  <strong>AI协作架构</strong>
-                                                  <p>React + FastAPI + MySQL + Tencent IM + LLM API，支持Agent路由、上下文压缩、工具调用和确认式执行</p>
-                                             </div>
-                                        </div>
+                                   <div class="tags">
+                                        <span>Java</span><span>Spring Cloud</span><span>LangGraph</span>
+                                        <span>AgentScope</span><span>A2A</span><span>MySQL</span><span>Kafka</span>
                                    </div>
                               </div>
+                         </article>
 
-                              <div class="timeline-tags">
-                                   <span class="tag">Java</span>
-                                   <span class="tag">Spring Cloud</span>
-                                   <span class="tag">Dubbo</span>
-                                   <span class="tag">MySQL</span>
-                                   <span class="tag">Redis</span>
-                                   <span class="tag">Kafka</span>
-                                   <span class="tag">Elasticsearch</span>
-                                   <span class="tag">Docker</span>
-                                   <span class="tag">Kubernetes</span>
-                                   <span class="tag">Seata</span>
-                                   <span class="tag">Nacos</span>
-                                   <span class="tag">Sentinel</span>
-                                   <span class="tag">SkyWalking</span>
-                                   <span class="tag primary">AI Engineer</span>
-                                   <span class="tag primary">FDE</span>
-                                   <span class="tag">Agent架构设计</span>
-                                   <span class="tag">LLM应用工程化</span>
-                                   <span class="tag">Context Engineering</span>
-                                   <span class="tag">Tool Calling</span>
-                                   <span class="tag">Human-in-the-loop</span>
-                                   <span class="tag">供应链金融</span>
-                                   <span class="tag">交易撮合</span>
-                                   <span class="tag">清算结算</span>
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">2021.10<br>— 2023.02</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">菜鸟网络</h3>
+                                        <span class="item__role">资深 Java 工程师</span>
+                                   </div>
+                                   <p class="item__desc">
+                                        在无交接前提下全面负责<strong>菜鸟国际天猫出海集运系统</strong>，保障线上平稳过渡；
+                                        完成核心主链路架构升级，团队需求吞吐率<strong>提升 50%</strong>，并通过链路 / SQL / 代码优化显著降低处理时延。
+                                   </p>
+                                   <div class="tags">
+                                        <span>Java</span><span>Spring Cloud</span><span>MySQL</span><span>Redis</span>
+                                   </div>
                               </div>
-                         </div>
+                         </article>
+
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">2020.08<br>— 2021.09</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">华锐金融</h3>
+                                        <span class="item__role">资深 Java 工程师</span>
+                                   </div>
+                                   <p class="item__desc">
+                                        作为系统交付负责人，完成<strong>国信证券、华林证券风控系统</strong>的交付与稳定运营；
+                                        主导两次大版本线上无感升级，实现线上<strong>零故障</strong>，获客户技术部门认可。
+                                   </p>
+                                   <div class="tags">
+                                        <span>Java</span><span>Spring Boot</span><span>证券风控</span><span>Redis</span>
+                                   </div>
+                              </div>
+                         </article>
+
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">2018.06<br>— 2020.03</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">顺丰科技</h3>
+                                        <span class="item__role">高级 Java 工程师</span>
+                                   </div>
+                                   <p class="item__desc">
+                                        负责<strong>代收保费系统</strong>，支持顺丰保险合同的配送、订单生成与薪资计算；
+                                        通过系统链路与 SQL 优化，将核心链路时延降至 <strong>0.5s</strong>。
+                                   </p>
+                                   <div class="tags">
+                                        <span>Java</span><span>Spring</span><span>MySQL</span><span>SQL 优化</span>
+                                   </div>
+                              </div>
+                         </article>
+
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">2015.07<br>— 2018.03</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">嘉联支付</h3>
+                                        <span class="item__role">Java 工程师</span>
+                                   </div>
+                                   <p class="item__desc">
+                                        负责 <strong>POS 机代理商与商户系统</strong>开发，涉及进件、结算、分润等核心支付业务流程，
+                                        打下完整的支付系统与金融业务工程基础。
+                                   </p>
+                                   <div class="tags">
+                                        <span>Java</span><span>Spring</span><span>MySQL</span><span>支付系统</span>
+                                   </div>
+                              </div>
+                         </article>
+
                     </div>
+               </section>
 
-                    <!-- 阿里巴巴 - 简化展示 -->
-                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
-                         <div class="timeline-marker"></div>
-                         <div class="timeline-content">
-                              <div class="timeline-header">
-                                   <div class="timeline-company">
-                                        <div class="company-logo">
-                                             <i class="fas fa-building"></i>
-                                        </div>
-                                        <div class="company-info">
-                                             <h3>阿里巴巴</h3>
-                                             <span class="company-field">国际物流</span>
-                                        </div>
+               <!-- Selected Work -->
+               <section class="block" id="work">
+                    <div class="block__sticky">代表项目</div>
+                    <p class="block__label">代表项目</p>
+                    <div class="list">
+
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">01<br>在建</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">AIWS 智能组织协作平台</h3>
+                                        <span class="item__badge">Flagship</span>
                                    </div>
-                                   <div class="timeline-meta">
-                                        <span class="timeline-date">
-                                             <i class="fas fa-calendar"></i>
-                                             2021年 - 2023年
-                                        </span>
-                                        <span class="timeline-position">高级开发工程师/架构师</span>
-                                   </div>
-                              </div>
-                              <div class="timeline-description">
-                                   <ul class="timeline-list">
-                                        <li>参与<strong>国际物流平台</strong>微服务架构设计与核心模块开发</li>
-                                        <li>负责<strong>物流追踪系统</strong>设计，实现全球物流节点实时追踪</li>
-                                        <li>优化<strong>跨境物流链路</strong>性能，响应时间降低40%，提升用户体验</li>
-                                        <li>参与物流<strong>智能调度系统</strong>开发，提高配送效率</li>
+                                   <p class="item__desc">
+                                        AI 驱动的智能组织协作平台，让<strong>多智能体协作</strong>真正嵌入企业日常工作流，我主导整体架构与落地。
+                                   </p>
+                                   <ul class="item__pts">
+                                        <li>基于 AgentScope 与 A2A 协议，实现 SuperAgent 与业务智能体的协作与协商</li>
+                                        <li>打通企业微信、任务分发、工作室工厂与工分体系，任务可自动生成、人工确认后创建并追踪</li>
+                                        <li>构建上下文管理、工具调用与 <strong>Human-in-the-loop</strong> 确认机制</li>
                                    </ul>
+                                   <div class="tags">
+                                        <span>React</span><span>TypeScript</span><span>FastAPI</span>
+                                        <span>AgentScope</span><span>A2A</span><span>MySQL</span>
+                                   </div>
                               </div>
-                              <div class="timeline-tags">
-                                   <span class="tag">Java</span>
-                                   <span class="tag">Spring Cloud</span>
-                                   <span class="tag">MySQL</span>
-                                   <span class="tag">Redis</span>
-                                   <span class="tag">RocketMQ</span>
-                                   <span class="tag">Docker</span>
-                              </div>
-                         </div>
-                    </div>
+                         </article>
 
-                    <!-- 华锐金融 - 简化展示 -->
-                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
-                         <div class="timeline-marker"></div>
-                         <div class="timeline-content">
-                              <div class="timeline-header">
-                                   <div class="timeline-company">
-                                        <div class="company-logo">
-                                             <i class="fas fa-building"></i>
-                                        </div>
-                                        <div class="company-info">
-                                             <h3>华锐金融</h3>
-                                             <span class="company-field">证券业务风控</span>
-                                        </div>
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">02<br>滴灌通</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">交易所 2.0 核心系统</h3>
+                                        <span class="item__role">技术 Owner</span>
                                    </div>
-                                   <div class="timeline-meta">
-                                        <span class="timeline-date">
-                                             <i class="fas fa-calendar"></i>
-                                             2020年 - 2021年
-                                        </span>
-                                        <span class="timeline-position">高级开发工程师</span>
-                                   </div>
-                              </div>
-                              <div class="timeline-description">
-                                   <ul class="timeline-list">
-                                        <li>设计证券交易<strong>实时风控系统</strong>，保障交易安全合规</li>
-                                        <li>开发<strong>风险监控引擎</strong>与预警规则配置平台</li>
-                                        <li>支持日均<strong>千万级</strong>交易风控检测，准确率99.9%</li>
-                                        <li>参与证券交易系统<strong>性能优化</strong>，提升系统稳定性</li>
+                                   <p class="item__desc">
+                                        支撑 <strong>SPV / SPAC / ETF</strong> 等多类金融产品交易与清算的交易所核心系统。
+                                   </p>
+                                   <ul class="item__pts">
+                                        <li>完成统一运营平台搭建、账户体系重构与清算核心系统重构</li>
+                                        <li>设计高可用架构，高压场景下稳定运行、<strong>线上零故障</strong></li>
+                                        <li>支撑平台<strong>亿级资产规模</strong>，建立标准化代码规范提升团队效率</li>
                                    </ul>
+                                   <div class="tags">
+                                        <span>Java</span><span>Spring Cloud</span><span>Redis</span>
+                                        <span>Kafka</span><span>Kubernetes</span>
+                                   </div>
                               </div>
-                              <div class="timeline-tags">
-                                   <span class="tag">Java</span>
-                                   <span class="tag">Spring Boot</span>
-                                   <span class="tag">Drools</span>
-                                   <span class="tag">Redis</span>
-                                   <span class="tag">Kafka</span>
-                                   <span class="tag">风控系统</span>
-                              </div>
-                         </div>
-                    </div>
+                         </article>
 
-                    <!-- 顺丰科技 - 简化展示 -->
-                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
-                         <div class="timeline-marker"></div>
-                         <div class="timeline-content">
-                              <div class="timeline-header">
-                                   <div class="timeline-company">
-                                        <div class="company-logo">
-                                             <i class="fas fa-building"></i>
-                                        </div>
-                                        <div class="company-info">
-                                             <h3>顺丰科技</h3>
-                                             <span class="company-field">保险业务</span>
-                                        </div>
+                         <article class="item reveal" tabindex="0">
+                              <div class="item__side">03<br>滴灌通</div>
+                              <div>
+                                   <div class="item__head">
+                                        <h3 class="item__title">智能投融资分析系统</h3>
+                                        <span class="item__role">AI 应用</span>
                                    </div>
-                                   <div class="timeline-meta">
-                                        <span class="timeline-date">
-                                             <i class="fas fa-calendar"></i>
-                                             2018年 - 2020年
-                                        </span>
-                                        <span class="timeline-position">高级开发工程师</span>
-                                   </div>
-                              </div>
-                              <div class="timeline-description">
-                                   <ul class="timeline-list">
-                                        <li>参与<strong>保险业务系统</strong>开发与优化，提升业务处理效率</li>
-                                        <li>负责<strong>保单管理模块</strong>与理赔流程系统设计与实现</li>
-                                        <li>优化保险核心系统性能，支撑业务快速增长</li>
+                                   <p class="item__desc">
+                                        用 <strong>LangGraph</strong> 构建 AI Agent 工作流，把 AI 能力深度集成进投研与投后管理。
+                                   </p>
+                                   <ul class="item__pts">
+                                        <li>Agent 工作流集成进"滴灌宇宙"系统，实现投研分析智能化</li>
+                                        <li>主导投后管理中心重构，投后门店异常情况可视化与自动化处理</li>
                                    </ul>
-                              </div>
-                              <div class="timeline-tags">
-                                   <span class="tag">Java</span>
-                                   <span class="tag">Spring</span>
-                                   <span class="tag">MySQL</span>
-                                   <span class="tag">Redis</span>
-                              </div>
-                         </div>
-                    </div>
-
-                    <!-- 嘉联支付 - 简化展示 -->
-                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
-                         <div class="timeline-marker"></div>
-                         <div class="timeline-content">
-                              <div class="timeline-header">
-                                   <div class="timeline-company">
-                                        <div class="company-logo">
-                                             <i class="fas fa-building"></i>
-                                        </div>
-                                        <div class="company-info">
-                                             <h3>嘉联支付</h3>
-                                             <span class="company-field">支付交易对账与分润</span>
-                                        </div>
-                                   </div>
-                                   <div class="timeline-meta">
-                                        <span class="timeline-date">
-                                             <i class="fas fa-calendar"></i>
-                                             2015年 - 2018年
-                                        </span>
-                                        <span class="timeline-position">开发工程师</span>
+                                   <div class="tags">
+                                        <span>Python</span><span>LangGraph</span><span>LangChain</span><span>LLM</span>
                                    </div>
                               </div>
-                              <div class="timeline-description">
-                                   <ul class="timeline-list">
-                                        <li>开发<strong>支付交易对账系统</strong>，确保交易数据准确性</li>
-                                        <li>实现<strong>商户收益分润引擎</strong>，支持多种分润规则配置</li>
-                                        <li>参与支付核心系统日常维护与性能优化</li>
-                                   </ul>
+                         </article>
+
+                    </div>
+               </section>
+
+               <!-- Skills -->
+               <section class="block" id="skills">
+                    <div class="block__sticky">技能</div>
+                    <p class="block__label">技术栈</p>
+                    <div class="skills">
+                         <div class="reveal">
+                              <p class="skill__cat">语言</p>
+                              <div class="skill__items">
+                                   <span class="key">Java</span><span class="key">Python</span>
+                                   <span>Go</span><span>JavaScript</span><span>TypeScript</span>
                               </div>
-                              <div class="timeline-tags">
-                                   <span class="tag">Java</span>
-                                   <span class="tag">Spring</span>
-                                   <span class="tag">MySQL</span>
-                                   <span class="tag">Redis</span>
-                                   <span class="tag">支付系统</span>
+                         </div>
+                         <div class="reveal">
+                              <p class="skill__cat">架构 & 分布式</p>
+                              <div class="skill__items">
+                                   <span class="key">Spring Cloud</span><span class="key">Spring Boot</span>
+                                   <span>微服务</span><span>分布式系统</span><span>高并发</span><span>清结算</span>
+                              </div>
+                         </div>
+                         <div class="reveal">
+                              <p class="skill__cat">AI 工程</p>
+                              <div class="skill__items">
+                                   <span class="key">AI Agent</span><span class="key">LangGraph</span>
+                                   <span class="key">AgentScope</span><span class="key">A2A</span>
+                                   <span>LangChain</span><span>RAG</span><span>Tool Calling</span><span>HITL</span>
+                              </div>
+                         </div>
+                         <div class="reveal">
+                              <p class="skill__cat">数据 & 中间件</p>
+                              <div class="skill__items">
+                                   <span class="key">MySQL</span><span class="key">Redis</span>
+                                   <span>Kafka</span><span>Elasticsearch</span>
+                              </div>
+                         </div>
+                         <div class="reveal">
+                              <p class="skill__cat">云原生 & 服务端</p>
+                              <div class="skill__items">
+                                   <span class="key">Docker</span><span class="key">Kubernetes</span>
+                                   <span>FastAPI</span><span>SQLAlchemy</span>
+                              </div>
+                         </div>
+                         <div class="reveal">
+                              <p class="skill__cat">金融科技</p>
+                              <div class="skill__items">
+                                   <span class="key">交易所系统</span><span>撮合 / 清算</span>
+                                   <span>风控</span><span>支付</span>
                               </div>
                          </div>
                     </div>
 
-               </div>
-          </div>
-     </section>
+                    <div class="edu reveal" style="margin-top:32px;">
+                         <span class="edu__school">西北工业大学</span>
+                         <span>软件工程 · 本科</span>
+                         <span class="edu__date">2011 — 2015</span>
+                    </div>
+               </section>
 
-     <!-- Skills Section -->
-     <section id="skills" class="skills">
-          <div class="container">
-               <div class="section-header">
-                    <span class="section-tag">Tech Stack</span>
-                    <h2 class="section-title">技术栈</h2>
-                    <p class="section-subtitle">多年技术积累，构建全面的技术体系</p>
-               </div>
-               <div class="skills-content">
-                    <div class="skill-category" data-aos="fade-up">
-                         <div class="category-header">
-                              <i class="fas fa-code"></i>
-                              <h3>编程语言</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">Java</span>
-                              <span class="skill-tag expert">Python</span>
-                              <span class="skill-tag advanced">Go</span>
-                              <span class="skill-tag advanced">JavaScript</span>
-                              <span class="skill-tag intermediate">TypeScript</span>
-                         </div>
+               <!-- Contact -->
+               <section class="block" id="contact">
+                    <div class="block__sticky">联系</div>
+                    <p class="block__label">联系</p>
+                    <div class="prose">
+                         <p>欢迎交流技术、架构与 AI 工程落地。</p>
+                    </div>
+                    <div class="tags" style="gap:10px;margin-top:8px;">
+                         <a href="mailto:li_lichuan@126.com" class="resume-link"><i class="fas fa-envelope"></i> li_lichuan@126.com</a>
+                         <a href="https://github.com/hbllc" target="_blank" rel="noopener" class="resume-link"><i class="fab fa-github"></i> github.com/hbllc</a>
+                         <a href="李立川-简历.pdf" download class="resume-link"><i class="fas fa-file-pdf"></i> 下载简历 PDF</a>
                     </div>
 
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
-                         <div class="category-header">
-                              <i class="fas fa-network-wired"></i>
-                              <h3>微服务框架</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">Spring Cloud</span>
-                              <span class="skill-tag expert">Spring Boot</span>
-                              <span class="skill-tag expert">Dubbo</span>
-                              <span class="skill-tag advanced">Service Mesh</span>
-                              <span class="skill-tag advanced">Istio</span>
-                         </div>
-                    </div>
+                    <p class="foot">
+                         © 2026 李立川 · 金融科技架构师 / AI Engineer<br>
+                         设计参考工程师社区通行范式，纯手写 HTML · CSS · JS 构建。
+                    </p>
+               </section>
 
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
-                         <div class="category-header">
-                              <i class="fas fa-robot"></i>
-                              <h3>AI技术</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">AI Agent</span>
-                              <span class="skill-tag expert">LLM应用工程化</span>
-                              <span class="skill-tag expert">Prompt Engineering</span>
-                              <span class="skill-tag advanced">Context Engineering</span>
-                              <span class="skill-tag advanced">RAG</span>
-                              <span class="skill-tag advanced">Tool Calling</span>
-                              <span class="skill-tag advanced">多智能体协同</span>
-                              <span class="skill-tag intermediate">LangChain</span>
-                         </div>
-                    </div>
+          </main>
+     </div>
 
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
-                         <div class="category-header">
-                              <i class="fas fa-database"></i>
-                              <h3>数据库</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">MySQL</span>
-                              <span class="skill-tag expert">Redis</span>
-                              <span class="skill-tag advanced">MongoDB</span>
-                              <span class="skill-tag advanced">Elasticsearch</span>
-                              <span class="skill-tag intermediate">InfluxDB</span>
-                         </div>
-                    </div>
-
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
-                         <div class="category-header">
-                              <i class="fas fa-stream"></i>
-                              <h3>消息中间件</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">Kafka</span>
-                              <span class="skill-tag expert">RocketMQ</span>
-                              <span class="skill-tag advanced">RabbitMQ</span>
-                              <span class="skill-tag advanced">Pulsar</span>
-                         </div>
-                    </div>
-
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
-                         <div class="category-header">
-                              <i class="fas fa-cloud"></i>
-                              <h3>云原生 & DevOps</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">Docker</span>
-                              <span class="skill-tag expert">Kubernetes</span>
-                              <span class="skill-tag advanced">Jenkins</span>
-                              <span class="skill-tag advanced">GitLab CI</span>
-                              <span class="skill-tag advanced">Prometheus</span>
-                              <span class="skill-tag intermediate">Grafana</span>
-                         </div>
-                    </div>
-
-                    <div class="skill-category" data-aos="fade-up" data-aos-delay="600">
-                         <div class="category-header">
-                              <i class="fas fa-coins"></i>
-                              <h3>金融科技</h3>
-                         </div>
-                         <div class="skill-tags">
-                              <span class="skill-tag expert">支付系统</span>
-                              <span class="skill-tag expert">风控系统</span>
-                              <span class="skill-tag expert">交易系统</span>
-                              <span class="skill-tag advanced">清算结算</span>
-                              <span class="skill-tag advanced">供应链金融</span>
-                              <span class="skill-tag advanced">证券交易</span>
-                         </div>
-                    </div>
-               </div>
-               <div class="skill-legend">
-                    <span class="legend-item">
-                         <span class="legend-dot expert"></span>
-                         <span>精通</span>
-                    </span>
-                    <span class="legend-item">
-                         <span class="legend-dot advanced"></span>
-                         <span>熟练</span>
-                    </span>
-                    <span class="legend-item">
-                         <span class="legend-dot intermediate"></span>
-                         <span>了解</span>
-                    </span>
-               </div>
-          </div>
-     </section>
-
-     <!-- Contact Section -->
-     <section id="contact" class="contact">
-          <div class="container">
-               <div class="section-header">
-                    <span class="section-tag">Get In Touch</span>
-                    <h2 class="section-title">联系方式</h2>
-                    <p class="section-subtitle">欢迎交流技术、探讨架构设计、分享最佳实践</p>
-               </div>
-               <div class="contact-content">
-                    <div class="contact-cards">
-                         <div class="contact-card" data-aos="fade-up">
-                              <div class="contact-icon">
-                                   <i class="fas fa-envelope"></i>
-                              </div>
-                              <h3>邮箱</h3>
-                              <a href="mailto:li_lichuan@126.com" class="contact-btn">
-                                   <i class="fas fa-envelope"></i>
-                                   发送邮件
-                              </a>
-                         </div>
-                         <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
-                              <div class="contact-icon">
-                                   <i class="fab fa-github"></i>
-                              </div>
-                              <h3>GitHub</h3>
-                              <a href="https://github.com/hbllc" target="_blank" rel="noopener" class="contact-btn">
-                                   <i class="fab fa-github"></i>
-                                   访问GitHub
-                              </a>
-                         </div>
-                         <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
-                              <div class="contact-icon">
-                                   <i class="fab fa-weixin"></i>
-                              </div>
-                              <h3>微信</h3>
-                              <button class="contact-btn" id="showWechatQR">
-                                   <i class="fab fa-weixin"></i>
-                                   扫码添加微信
-                              </button>
-                         </div>
-                    </div>
-               </div>
-          </div>
-     </section>
-
-     <!-- Footer -->
-     <footer class="footer">
-          <div class="container">
-               <div class="footer-content">
-                    <p>&copy; 2026 李立川. All rights reserved.</p>
-                    <p class="footer-subtitle">Built with ❤️ using HTML, CSS & JavaScript</p>
-               </div>
-          </div>
-     </footer>
-
-     <!-- Scroll to Top Button -->
-     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
-          <i class="fas fa-arrow-up"></i>
-     </button>
-
-     <!-- WeChat QR Code Modal -->
-     <div class="qr-modal" id="qrModal">
-          <div class="qr-modal-content">
-               <button class="qr-modal-close" id="closeQRModal" aria-label="Close">
-                    <i class="fas fa-times"></i>
-               </button>
-               <div class="qr-modal-header">
-                    <i class="fab fa-weixin"></i>
-                    <h3>扫码添加微信</h3>
-               </div>
-               <div class="qr-placeholder-modal">
-                    <img src="images/wechat-qr.jpg" alt="微信二维码" class="qr-image"
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-qrcode\'></i>';">
-               </div>
-               <p class="qr-modal-text">使用微信扫一扫添加好友</p>
+     <!-- WeChat QR modal -->
+     <div class="modal" id="qrModal">
+          <div class="modal__card">
+               <button class="modal__close" id="qrClose" aria-label="关闭"><i class="fas fa-times"></i></button>
+               <h3><i class="fab fa-weixin" style="color:#07c160"></i> 扫码加微信</h3>
+               <img src="images/wechat-qr.jpg" alt="微信二维码"
+                    onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<p>二维码加载失败</p>');">
+               <p>使用微信扫一扫添加好友</p>
           </div>
      </div>
 
-     <!-- Custom JavaScript -->
-     <script src="js/main.js"></script>
+     <script src="js/app.js"></script>
 </body>
 
 </html>
