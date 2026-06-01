@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我用两个 AI 做出了这个网站：一个管设计、一个管实现，让它们互相评审 · 李立川</title>
+</head>
+<body style="margin:0;background:#ffffff;">
+<!-- 返回主站（在 section 外，全选复制到公众号时不会被带入） -->
+<nav style="max-width:677px;margin:0 auto;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;">
+  <a href="../index.html" style="color:#34618e;text-decoration:none;font-size:14px;">← 返回 李立川 · 首页</a>
+</nav>
+<!--
+  使用方法：
+  1. 用浏览器打开本文件；
+  2. 从标题处按住拖到文末「全选」，复制；
+  3. 粘贴进微信公众号 / CSDN 编辑器，正文样式会保留。
+-->
+<section style="max-width:677px;margin:0 auto;padding:20px 16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#ffffff;">
+
+  <h1 style="font-size:22px;font-weight:bold;color:#222222;text-align:center;line-height:1.5;margin:6px 0 28px;">我用两个 AI 做出了这个网站：一个管设计、一个管实现，让它们互相评审</h1>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">上一篇我写了这个个人主页「技术上是怎么做的」。但说句实话——<strong style="color:#34618e;">代码不是我一行行敲的，是我指挥两个 AI 协作做出来的。</strong>一个负责设计与审美，一个负责把设计落成真实代码，我自己扮演产品经理和最终拍板人。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">更关键的不是「用了 AI」，而是<strong style="color:#34618e;">让两个 AI 互相评审、来回讨论</strong>，把一版粗糙的模板，磨成一个我愿意挂出去的成品。这篇就讲这套协作流程，以及里面「人」该守住什么。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">一、为什么用两个 AI，而不是一个</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">单个 AI 全包，容易陷进「自说自话」：它生成、它自夸、没有第三方视角挑刺。我的做法是<strong style="color:#34618e;">让两个能力侧重不同的 AI 分工，再让它们互为评审</strong>：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">GenSpark</strong>——出设计方向、把控视觉与审美，并以「用户视角」评审线上成品；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">Claude Code</strong>——基于真实简历把设计落成代码，直接改文件、跑本地预览、提交部署；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">我自己</strong>——定目标、给真实内容、对每一处取舍拍板。</li>
+  </ul>
+
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">设计 AI 和工程 AI 看问题的角度不一样，正好互相补盲区——一个盯「好不好看、信息顺不顺」，一个盯「能不能实现、结构干不干净」。让它们对话，比我反复在一个 AI 里来回提要求高效得多。</blockquote>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">二、完整流程：从模板到成品</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">整个过程是一条「生成 → 落地 → 上线 → 评审 → 再打磨」的回路：</p>
+
+  <table style="width:100%;border-collapse:collapse;margin:18px 0;">
+    <tr><td style="padding:4px 0;vertical-align:top;">
+      <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px 14px;font-size:14px;color:#2b2b2b;line-height:1.6;"><strong style="color:#34618e;">① GenSpark 出模板</strong>　给定位与气质（金融科技 / 工程感），让它产出网页设计方向与视觉模板。</div>
+    </td></tr>
+    <tr><td style="text-align:center;color:#9bb0c6;font-size:13px;padding:2px;">↓</td></tr>
+    <tr><td style="padding:4px 0;vertical-align:top;">
+      <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px 14px;font-size:14px;color:#2b2b2b;line-height:1.6;"><strong style="color:#34618e;">② Claude Code 落地</strong>　把我的简历喂给它，基于模板生成真实的 HTML / CSS / JS——内容是真的，不是占位文案。</div>
+    </td></tr>
+    <tr><td style="text-align:center;color:#9bb0c6;font-size:13px;padding:2px;">↓</td></tr>
+    <tr><td style="padding:4px 0;vertical-align:top;">
+      <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px 14px;font-size:14px;color:#2b2b2b;line-height:1.6;"><strong style="color:#34618e;">③ 部署到 GitHub Pages</strong>　先推上线，拿到一个真实可访问的网址——后面要评审的是「真实渲染」，不是想象。</div>
+    </td></tr>
+    <tr><td style="text-align:center;color:#9bb0c6;font-size:13px;padding:2px;">↓</td></tr>
+    <tr><td style="padding:4px 0;vertical-align:top;">
+      <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px 14px;font-size:14px;color:#2b2b2b;line-height:1.6;"><strong style="color:#34618e;">④ GenSpark 评审线上成品</strong>　把线上页面交给它挑刺：信息层次、留白、视觉重心、转化路径哪里不对。</div>
+    </td></tr>
+    <tr><td style="text-align:center;color:#9bb0c6;font-size:13px;padding:2px;">↓</td></tr>
+    <tr><td style="padding:4px 0;vertical-align:top;">
+      <div style="border:1px solid #c9d6e3;background:#eef9f0;border-radius:6px;padding:11px 14px;font-size:14px;color:#2b2b2b;line-height:1.6;"><strong style="color:#2e7d52;">⑤ 两个 AI 讨论 + 打磨（循环）</strong>　把 GenSpark 的意见喂回 Claude Code，就内容、结构、审美来回对齐，逐处落成修改；不满意就回到 ④，直到成品。</div>
+    </td></tr>
+  </table>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">真正出效果的是第 ④、⑤ 步的<strong style="color:#34618e;">循环</strong>。第一版永远只是起点；一轮轮「评审—修改—再评审」，才是把「能看」变成「耐看」的地方。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">三、一轮真实的「评审—修改」长什么样</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">举个我真实经历过的来回，体感最直接：</p>
+
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;"><strong style="color:#34618e;">GenSpark：</strong>首屏信息太满，价值主张被一堆数据淹没了；右栏的数字建议收敛成几个关键指标，并且每个都要「撑得住」，别挤在一起。</blockquote>
+
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f0f6ff;border-left:4px solid #5b8cff;color:#555555;font-size:15px;line-height:1.8;"><strong style="color:#34618e;">Claude Code：</strong>已把右栏改成 2×2 的四张独立战绩卡，放大字号、拉开间距；同时移除了一个我（指本人）认为不够准确的「系统套数」指标，换成更稳的「零故障 / AI 工程化」。本地预览已更新。</blockquote>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">注意最后那半句——<strong style="color:#34618e;">「我认为不够准确」</strong>。这正是人必须在场的地方：AI 会把话说得很漂亮，但哪个数字真实、哪句分寸合适，得我来守。<strong style="color:#34618e;">设计和实现可以交给 AI，事实和取舍不能。</strong></p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">四、几条踩下来的心得</h2>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:11px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">让 AI 互相评审，胜过单个 AI 反复改。</strong>不同侧重的模型互为「第二双眼睛」，能照出彼此的盲区，比你一个人在单一对话里反复提需求更有效。</li>
+    <li style="margin:11px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">先部署，再评审。</strong>评审「线上真实渲染」远比评审脑补的设计稿准——字体、间距、响应式在真机上才现原形。所以哪怕很粗糙，也要先推上去拿到 URL。</li>
+    <li style="margin:11px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">小步迭代，git 留痕。</strong>每一轮打磨就是一个独立的小 commit：首屏降压一版、文章区一版、联系方式收口一版……改坏了能随时回退，心里有底。</li>
+    <li style="margin:11px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">内容由人兜底。</strong>真实指标、措辞分寸、信息优先级——这些 AI 会「帮你写得好看」，但只有你知道哪些是真的、哪些该克制。这条底线不能让渡。</li>
+  </ul>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">写在最后：你是导演，AI 是剧组</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这套流程能跑通，核心不在「AI 多强」，而在<strong style="color:#34618e;">分工、互评、和人的拍板</strong>。AI 是能力很强但需要明确指令和裁判的执行者；你得是那个定目标、给素材、做取舍、喊「就这样」的人。</p>
+
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">我做的是 AI Agent 工程化——让多个智能体协作、可控地把事情做成。给自己做个网站，恰好是这件事最小、最顺手的一次实践：两个 AI 一个出设计、一个写代码、互相评审，我在中间导演。你正在看的这个站，就是这么磨出来的。</blockquote>
+
+  <p style="margin:28px 0 8px;font-size:14px;color:#888888;line-height:1.8;text-align:center;">—— 如果这篇对你有用，欢迎在我的主页看看其它内容。</p>
+
+</section>
+</body>
+</html>
