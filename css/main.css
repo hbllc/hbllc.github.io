@@ -365,8 +365,8 @@ img {
 }
 
 .hero__title {
-     font-size: clamp(3rem, 7vw, 5rem);
-     line-height: 1.02;
+     font-size: clamp(2.4rem, 4vw, 3.5rem);
+     line-height: 1.05;
      letter-spacing: 0.01em;
      font-weight: 800;
      color: var(--tx-0);
@@ -377,10 +377,10 @@ img {
 }
 
 .hero__lead {
-     margin-top: 24px;
-     max-width: 58ch;
-     font-size: 1.08rem;
-     line-height: 1.85;
+     margin-top: 20px;
+     max-width: 40ch;
+     font-size: 0.98rem;
+     line-height: 1.8;
      color: var(--tx-1);
 }
 
@@ -396,11 +396,11 @@ img {
      gap: 14px;
 }
 
-/* hero stats */
+/* hero stats — 右栏 2×2 指标卡 */
 .stats {
-     margin-top: 72px;
+     margin-top: 0;
      display: grid;
-     grid-template-columns: repeat(4, 1fr);
+     grid-template-columns: repeat(2, 1fr);
      border: 1px solid var(--bd-1);
      border-radius: var(--r-lg);
      overflow: hidden;
@@ -409,14 +409,20 @@ img {
 }
 
 .stat {
-     padding: 28px 26px;
+     padding: 24px 24px;
      border-right: 1px solid var(--bd);
+     border-bottom: 1px solid var(--bd);
      position: relative;
      transition: background 0.25s var(--ease);
 }
 
-.stat:last-child {
+/* 2×2：右列与末行去边 */
+.stat:nth-child(2n) {
      border-right: 0;
+}
+
+.stat:nth-child(n + 3) {
+     border-bottom: 0;
 }
 
 .stat:hover {
@@ -1413,10 +1419,10 @@ img {
 }
 
 .hero__value {
-     margin-top: 26px;
-     max-width: 21ch;
-     font-size: clamp(1.45rem, 3.2vw, 2.15rem);
-     line-height: 1.42;
+     margin-top: 22px;
+     max-width: 19ch;
+     font-size: clamp(1.2rem, 2vw, 1.6rem);
+     line-height: 1.45;
      font-weight: 700;
      letter-spacing: 0;
      color: var(--tx-0);
@@ -1805,15 +1811,15 @@ img {
      transform: translateX(4px);
 }
 
-/* 次按钮更安静，拉开与主按钮的层级 */
+/* 次按钮：清晰可点的描边控件，明显低于主按钮但不虚 */
 .btn--ghost {
-     color: var(--tx-mut);
-     border-color: var(--bd);
+     color: var(--tx-1);
+     border-color: var(--bd-1);
 }
 
 .btn--ghost:hover {
      color: var(--tx-0);
-     border-color: var(--bd-2);
+     border-color: var(--ac-line);
      background: var(--bg-1);
 }
 
@@ -1997,4 +2003,392 @@ img {
 /* 联系区行动按钮：撑满列宽、对齐统一，转化梯度更清晰 */
 .contact-actions .btn {
      width: 100%;
+}
+
+/* ============================================================
+   最终精修 — 首屏平衡双栏（左栏讲人 / 右栏证明人）
+   ============================================================ */
+
+.hero {
+     padding: 144px 0 92px;
+}
+
+.hero__grid {
+     display: grid;
+     grid-template-columns: minmax(0, 5.4fr) minmax(0, 6.6fr);
+     gap: 60px;
+     align-items: center;
+}
+
+.hero__main {
+     min-width: 0;
+}
+
+.hero__aside {
+     min-width: 0;
+     display: flex;
+     flex-direction: column;
+     gap: 16px;
+}
+
+/* 三动作节奏：主 > 强调次 > 弱化动作 */
+.hero__actions {
+     margin-top: 32px;
+     gap: 12px;
+     align-items: center;
+}
+
+/* 弱化动作：近乎文本链接，不与前两者争视觉 */
+.btn--quiet {
+     border-color: transparent;
+     background: transparent;
+     color: var(--tx-mut);
+     padding-left: 14px;
+     padding-right: 14px;
+}
+
+.btn--quiet:hover {
+     border-color: var(--bd-1);
+     background: transparent;
+     color: var(--tx-0);
+     transform: none;
+}
+
+/* 右栏 2×2 指标：焦点格文本更紧凑 */
+.stat__num {
+     font-size: 1.9rem;
+}
+
+.stat--focus {
+     background: rgba(91, 140, 255, 0.05);
+}
+
+.stat--focus .stat__num {
+     font-size: 1rem;
+     font-weight: 650;
+     line-height: 1.5;
+}
+
+/* 右栏摘要卡：高密度、克制，承担真实信息功能 */
+.hero-card {
+     border: 1px solid var(--bd-1);
+     border-radius: var(--r-lg);
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1) 72%);
+     box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.045);
+     padding: 22px 24px;
+}
+
+.hero-card__title {
+     display: flex;
+     align-items: center;
+     gap: 9px;
+     font-family: var(--mono);
+     font-size: 0.76rem;
+     letter-spacing: 0.06em;
+     text-transform: uppercase;
+     color: var(--ac);
+     padding-bottom: 14px;
+     margin-bottom: 14px;
+     border-bottom: 1px solid var(--bd);
+}
+
+.hero-card__list {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+}
+
+.hero-card__list li {
+     position: relative;
+     padding-left: 24px;
+     font-size: 0.95rem;
+     font-weight: 500;
+     line-height: 1.5;
+     color: var(--tx-0);
+}
+
+.hero-card__list li::before {
+     content: "\f00c";
+     font-family: "Font Awesome 6 Free";
+     font-weight: 900;
+     position: absolute;
+     left: 0;
+     top: 2px;
+     font-size: 0.72rem;
+     color: var(--ac-1);
+}
+
+.hero-card__foot {
+     margin-top: 16px;
+     padding-top: 14px;
+     border-top: 1px solid var(--bd);
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+}
+
+.hero-card__k {
+     font-family: var(--mono);
+     font-size: 0.7rem;
+     letter-spacing: 0.05em;
+     text-transform: uppercase;
+     color: var(--tx-mut);
+}
+
+.hero-card__v {
+     font-size: 0.88rem;
+     line-height: 1.6;
+     color: var(--tx-1);
+}
+
+/* 平板及以下：堆叠为单栏，右栏移到说明之后 */
+@media (max-width: 920px) {
+     .hero__grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 40px;
+          align-items: stretch;
+     }
+
+     .hero__aside {
+          max-width: 560px;
+     }
+}
+
+@media (max-width: 760px) {
+     .hero__aside .stats,
+     .stats {
+          margin-top: 0;
+     }
+}
+
+/* ============================================================
+   最终精修 — Forward Deployed 工作方式：方法论名片 + 流向链路
+   ============================================================ */
+
+/* 卡片相对背景再抬一层，并加一道顶部强调高光（克制） */
+.workstyle {
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1) 76%);
+     box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+     overflow: hidden;
+}
+
+.workstyle::before {
+     content: "";
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     height: 1px;
+     background: linear-gradient(90deg, transparent, var(--ac-line) 50%, transparent);
+}
+
+/* 标题区存在感：accent 引导 + 更重的方法论声明 */
+.workstyle__label {
+     font-size: 0.78rem;
+     letter-spacing: 0.1em;
+     color: var(--ac-1);
+}
+
+.workstyle__sub {
+     font-size: 1.14rem;
+     font-weight: 600;
+     color: var(--tx-0);
+     line-height: 1.55;
+}
+
+/* 四步：节点编号做成 badge，体现"现场→表达→设计→交付"链路 */
+.workstyle__grid {
+     gap: 24px 30px;
+}
+
+.ws {
+     position: relative;
+     transition: transform 0.25s var(--ease);
+}
+
+.ws h4 {
+     display: flex;
+     align-items: center;
+     gap: 11px;
+     font-size: 0.98rem;
+     margin-bottom: 10px;
+}
+
+.ws h4::before {
+     content: counter(ws, decimal-leading-zero);
+     flex-shrink: 0;
+     width: 30px;
+     height: 30px;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     margin-right: 0;
+     border-radius: 9px;
+     background: var(--ac-soft);
+     border: 1px solid var(--ac-line);
+     color: var(--ac-1);
+     font-family: var(--mono);
+     font-size: 0.72rem;
+     font-weight: 600;
+     vertical-align: baseline;
+     transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.ws:hover h4::before {
+     background: rgba(91, 140, 255, 0.18);
+     border-color: var(--ac);
+}
+
+.ws p strong {
+     color: var(--tx-0);
+     font-weight: 600;
+}
+
+/* 流向连接符：仅桌面四列时出现，指明推进方向 */
+.ws:not(:last-child)::after {
+     content: "\f054";
+     font-family: "Font Awesome 6 Free";
+     font-weight: 900;
+     position: absolute;
+     top: 9px;
+     right: -20px;
+     font-size: 0.68rem;
+     color: var(--bd-2);
+     pointer-events: none;
+}
+
+@media (max-width: 900px) {
+     .ws:not(:last-child)::after {
+          display: none;
+     }
+}
+
+/* ============================================================
+   最终精修 — 代表项目：结果优先 / 扫描优先
+   ============================================================ */
+
+/* 一句话概述：作为标题后的第一价值层，更有力量 */
+.project__lead {
+     font-size: 1.12rem;
+     color: var(--tx-0);
+     margin-bottom: 18px;
+}
+
+/* 亮点结果：作为"扫描层 payoff"，悬浮时强调线随卡片一同点亮 */
+.project__highlights {
+     transition: border-color 0.28s var(--ease), background 0.28s var(--ease);
+}
+
+.project:hover .project__highlights {
+     border-left-color: var(--ac-1);
+     background: rgba(91, 140, 255, 0.08);
+}
+
+.project__highlights li::before {
+     content: "\f00c";
+     font-family: "Font Awesome 6 Free";
+     font-weight: 900;
+     font-size: 0.7rem;
+     line-height: 1.7;
+}
+
+/* 技术栈：进一步收敛为安静的元信息，不与结果争视觉 */
+.project .stack {
+     gap: 7px;
+     margin-top: 2px;
+}
+
+.project .stack span {
+     font-size: 0.71rem;
+     padding: 4px 10px;
+     color: var(--tx-mut);
+}
+
+/* 展开入口：精致的"看细节"控件，明确是下一步而非噪音 */
+.project__more {
+     font-size: 0.78rem;
+     color: var(--tx-1);
+     transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
+          background 0.2s var(--ease);
+}
+
+.project__detail[open] .project__more {
+     border-color: var(--ac-line);
+     background: var(--ac-soft);
+     color: var(--ac-1);
+}
+
+/* ============================================================
+   最终精修 — 后半段收尾闭环（经历 / 能力版图 / 联系）
+   ============================================================ */
+
+/* A · 工作经历：当前职位锚点 + 结果可扫 */
+.tl:first-child::before {
+     background: var(--ac);
+     border-color: var(--ac);
+     box-shadow: 0 0 0 4px var(--ac-soft);
+}
+
+.tl__co {
+     font-size: 1.22rem;
+}
+
+.tl__date {
+     letter-spacing: 0.03em;
+}
+
+/* B · 能力版图：降低名词堆积，增加块间呼吸 */
+.matrix {
+     gap: 20px;
+}
+
+.matrix__cell {
+     padding: 28px 30px;
+}
+
+.matrix__note {
+     margin-bottom: 18px;
+}
+
+.matrix__items {
+     gap: 10px;
+}
+
+.matrix__items span {
+     padding: 5px 13px;
+}
+
+/* C · 联系区：明确收口与邀请感 */
+.contact-copy h2 {
+     margin-bottom: 16px;
+}
+
+.contact-copy p {
+     font-size: 1rem;
+     line-height: 1.8;
+}
+
+.contact-actions {
+     gap: 11px;
+}
+
+/* 第二动作（下载简历）与主动作拉开、与第三梯队拉开，转化梯度清晰 */
+.contact-actions .btn--accent {
+     font-weight: 600;
+}
+
+/* 移动端：收紧指标卡内边距与焦点格字号，避免文本贴边/裁切 */
+@media (max-width: 480px) {
+     .stat {
+          padding: 18px 16px;
+     }
+
+     .stat--focus .stat__num {
+          font-size: 0.92rem;
+          line-height: 1.45;
+     }
+
+     .hero__lead {
+          max-width: none;
+     }
 }
