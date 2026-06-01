@@ -2277,3 +2277,112 @@ img {
           max-width: none;
      }
 }
+
+/* ============================================================
+   技术文章 — 整卡可点，hover 抬升，与项目/战绩卡同一套语言
+   ============================================================ */
+.writing-list {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 20px;
+}
+
+/* 旗舰原创卡横跨整行，作为头牌；CSDN 精选 2×2 在下 */
+.article-card--feature {
+     grid-column: 1 / -1;
+     border-color: var(--bd-2);
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1) 70%);
+}
+
+.article-card {
+     display: block;
+     padding: 28px 30px;
+     border: 1px solid var(--bd-1);
+     border-radius: var(--r-lg);
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+     box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+     transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+
+.article-card:hover {
+     border-color: var(--bd-2);
+     transform: translateY(-2px);
+}
+
+.article-card__meta {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     margin-bottom: 14px;
+}
+
+.article-card__src {
+     font-size: 0.76rem;
+     color: var(--tx-mut);
+     letter-spacing: 0.04em;
+}
+
+.article-card__title {
+     font-size: 1.24rem;
+     font-weight: 650;
+     line-height: 1.5;
+     color: var(--tx-0);
+     margin: 0 0 12px;
+}
+
+.article-card__excerpt {
+     font-size: 0.95rem;
+     line-height: 1.75;
+     color: var(--tx-mut);
+     margin: 0 0 18px;
+}
+
+.article-card__more {
+     display: inline-flex;
+     align-items: center;
+     gap: 8px;
+     font-size: 0.9rem;
+     font-weight: 500;
+     color: var(--ac-1);
+}
+
+.article-card__more .fa-arrow-right {
+     transition: transform 0.22s var(--ease);
+}
+
+.article-card:hover .article-card__more .fa-arrow-right {
+     transform: translateX(4px);
+}
+
+/* 全部文章入口：整行、居中的弱化链接 */
+.writing-all {
+     grid-column: 1 / -1;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     gap: 8px;
+     margin-top: 4px;
+     padding: 6px;
+     font-size: 0.92rem;
+     font-weight: 500;
+     color: var(--tx-mut);
+     transition: color 0.22s var(--ease);
+}
+
+.writing-all:hover {
+     color: var(--ac-1);
+}
+
+.writing-all .fa-arrow-right {
+     transition: transform 0.22s var(--ease);
+}
+
+.writing-all:hover .fa-arrow-right {
+     transform: translateX(4px);
+}
+
+@media (max-width: 760px) {
+     .writing-list {
+          grid-template-columns: 1fr;
+     }
+}

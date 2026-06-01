@@ -40,6 +40,7 @@
                     <a href="#projects" class="nav-link">代表项目</a>
                     <a href="#experience" class="nav-link">经历</a>
                     <a href="#skills" class="nav-link">技能</a>
+                    <a href="#writing" class="nav-link">文章</a>
                     <a href="#contact" class="nav-link">联系</a>
                </nav>
                <a href="李立川-15815506505.pdf" download class="nav__cta">
@@ -455,6 +456,18 @@
                     </div>
 
                     <div class="matrix">
+                         <div class="matrix__cell matrix__cell--wide reveal">
+                              <div class="matrix__head"><i class="fas fa-robot"></i>
+                                   <h3>AI 工程化</h3>
+                              </div>
+                              <p class="matrix__note">让大模型从 demo 走到可上线的生产能力。</p>
+                              <div class="matrix__items">
+                                   <span class="key">AI Agent</span><span class="key">LangGraph</span><span class="key">AgentScope</span>
+                                   <span class="key">A2A 协议</span>
+                                   <span>多智能体协作</span><span>Human-in-the-loop</span>
+                              </div>
+                         </div>
+
                          <div class="matrix__cell reveal">
                               <div class="matrix__head"><i class="fas fa-server"></i>
                                    <h3>后端与架构</h3>
@@ -498,18 +511,6 @@
                                    <span>FastAPI</span><span>CI/CD</span>
                               </div>
                          </div>
-
-                         <div class="matrix__cell matrix__cell--wide reveal">
-                              <div class="matrix__head"><i class="fas fa-robot"></i>
-                                   <h3>AI 工程化</h3>
-                              </div>
-                              <p class="matrix__note">让大模型从 demo 走到可上线的生产能力。</p>
-                              <div class="matrix__items">
-                                   <span class="key">AI Agent</span><span class="key">LangGraph</span><span class="key">AgentScope</span>
-                                   <span class="key">A2A 协议</span>
-                                   <span>多智能体协作</span><span>Human-in-the-loop</span>
-                              </div>
-                         </div>
                     </div>
 
                     <div class="capsule reveal" style="margin-top:18px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;">
@@ -521,11 +522,80 @@
                </div>
           </section>
 
+          <!-- ===================== WRITING ===================== -->
+          <section class="section" id="writing">
+               <div class="container">
+                    <div class="section-head">
+                         <span class="section-index">05</span>
+                         <h2 class="section-title">技术文章</h2>
+                         <span class="section-note">把实战中的架构与取舍写下来</span>
+                    </div>
+
+                    <div class="writing-list">
+                         <!-- 旗舰原创：本站文章页 -->
+                         <a class="article-card article-card--feature reveal" href="articles/aiws-architecture.html" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--live">原创 · 公众号</span>
+                                   <span class="article-card__src">AI Agent · 架构</span>
+                              </div>
+                              <h3 class="article-card__title">把多智能体协作做进企业真实工作流：AIWS 的架构与取舍</h3>
+                              <p class="article-card__excerpt">多数 AI Agent 落地，最后都长成一个独立聊天框。这篇讲 AIWS 如何让多智能体协作真正嵌入企业工作流——架构选择，以及更重要的「为什么这么选」的取舍。</p>
+                              <span class="article-card__more">阅读全文 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <!-- CSDN 精选 -->
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/153395132" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">AI Agent</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">AI 多 agent 协作范式思考</h3>
+                              <p class="article-card__excerpt">多 Agent 协作，本质是路由分支、依赖等待、结果合并这些经典计算范式，在 AI 能力下的智能化演进。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/156935825" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">系统设计</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">短信系统设计 · 防盗刷</h3>
+                              <p class="article-card__excerpt">短信接口防盗刷的多层纵深防御：人机验证、多维限流、动态签名，加风控与自动熔断。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/155106970" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">消息中间件</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">RabbitMQ 和 Kafka 选型</h3>
+                              <p class="article-card__excerpt">一句话拍板：消息通信选 RabbitMQ，海量数据流处理选 Kafka——背后是两者定位的根本差异。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/153958707" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">架构体系</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">Java 中间件全景回顾</h3>
+                              <p class="article-card__excerpt">分布式系统中间件技术体系全景：接入 / 服务 / 数据 / 熔断降级 / 运维各层的选型与价值。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="writing-all reveal" href="https://blog.csdn.net/weixin_42632514" target="_blank" rel="noopener">
+                              在 CSDN 查看全部文章 <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                         </a>
+                    </div>
+               </div>
+          </section>
+
           <!-- ===================== CONTACT ===================== -->
           <section class="section" id="contact">
                <div class="container">
                     <div class="section-head">
-                         <span class="section-index">05</span>
+                         <span class="section-index">06</span>
                          <h2 class="section-title">联系</h2>
                     </div>
 
