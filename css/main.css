@@ -396,58 +396,71 @@ img {
      gap: 14px;
 }
 
-/* hero stats — 右栏安静的数字证明面板（纵向、轻容器） */
-.stats {
-     margin-top: 0;
+/* hero proof — 右栏证明区容器：2×2 战绩卡 + 卡片下方领域标签 */
+.proof {
      display: flex;
      flex-direction: column;
-     border: 1px solid var(--bd);
-     border-radius: var(--r-lg);
-     overflow: hidden;
-     background: linear-gradient(180deg, var(--bg-1), rgba(26, 36, 56, 0.4));
+     gap: 18px;
+}
+
+/* hero stats — 右栏 2×2 四张独立战绩卡（放大、有体量，撑住右栏） */
+.stats {
+     margin: 0;
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 22px;
 }
 
 .stat {
      display: flex;
-     align-items: baseline;
-     justify-content: space-between;
-     gap: 20px;
-     padding: 24px 28px;
-     border-bottom: 1px solid var(--bd);
-     transition: background 0.25s var(--ease);
-}
-
-.stat:last-child {
-     border-bottom: 0;
+     flex-direction: column;
+     justify-content: center;
+     gap: 12px;
+     padding: 40px 32px;
+     border: 1px solid var(--bd-1);
+     border-radius: var(--r-lg);
+     background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+     box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+     transition: border-color 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
 .stat:hover {
-     background: rgba(91, 140, 255, 0.04);
+     border-color: var(--bd-2);
+     transform: translateY(-2px);
 }
 
+/* 数字是右栏主角：大、重，才扛得住左边大标题 */
 .stat__num {
-     font-size: 2.1rem;
-     font-weight: 700;
+     font-size: 2.5rem;
+     font-weight: 750;
      letter-spacing: -0.02em;
      color: var(--tx-0);
      line-height: 1;
-     flex-shrink: 0;
 }
 
 .stat__num small {
-     font-size: 0.95rem;
+     font-size: 1rem;
      font-weight: 500;
      color: var(--ac-1);
-     margin-left: 3px;
+     margin-left: 4px;
      letter-spacing: 0;
 }
 
 .stat__label {
-     font-size: 0.86rem;
-     color: var(--tx-mut);
+     font-size: 0.92rem;
+     color: var(--tx-1);
      letter-spacing: 0;
-     text-align: right;
-     line-height: 1.5;
+     line-height: 1.45;
+}
+
+/* 卡片第三行：补一句更具体的说明，撑住卡片内容密度 */
+.stat__note {
+     display: block;
+     margin-top: 7px;
+     font-size: 0.78rem;
+     font-weight: 400;
+     color: var(--tx-mut);
+     line-height: 1.4;
 }
 
 /* ---------------- About ---------------- */
@@ -1384,6 +1397,19 @@ img {
      background: var(--ac);
 }
 
+/* 领域标签：卡片下方一行点出主战场，AI Agent 工程化 提色收口 */
+.hero__domains {
+     font-size: 0.85rem;
+     color: var(--tx-mut);
+     letter-spacing: 0.01em;
+     text-align: center;
+}
+
+.hero__domains span {
+     color: var(--ac-1);
+     font-weight: 600;
+}
+
 .hero__value {
      margin-top: 22px;
      max-width: 19ch;
@@ -1764,8 +1790,8 @@ img {
 
 /* ---- P1 · 首屏 CTA 主次 ---- */
 .btn--cta {
-     font-size: 0.98rem;
-     padding: 14px 28px;
+     font-size: 0.92rem;
+     padding: 12px 22px;
 }
 
 .btn--cta .fa-arrow-right {
@@ -1981,8 +2007,8 @@ img {
 
 .hero__grid {
      display: grid;
-     grid-template-columns: minmax(0, 5.4fr) minmax(0, 6.6fr);
-     gap: 60px;
+     grid-template-columns: minmax(0, 6fr) minmax(0, 5.5fr);
+     gap: 56px;
      align-items: center;
 }
 
