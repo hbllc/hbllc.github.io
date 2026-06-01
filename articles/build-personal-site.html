@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从零手写一个「不像模板」的个人主页，并白嫖 GitHub Pages 上线 · 李立川</title>
+</head>
+<body style="margin:0;background:#ffffff;">
+<!-- 返回主站（在 section 外，全选复制到公众号时不会被带入） -->
+<nav style="max-width:677px;margin:0 auto;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;">
+  <a href="../index.html" style="color:#34618e;text-decoration:none;font-size:14px;">← 返回 李立川 · 首页</a>
+</nav>
+<!--
+  使用方法：
+  1. 用浏览器打开本文件；
+  2. 从标题处按住拖到文末「全选」，复制；
+  3. 粘贴进微信公众号 / CSDN 编辑器，正文样式会保留；
+  4. 代码块在公众号里可能掉部分样式，内容不受影响。
+-->
+<section style="max-width:677px;margin:0 auto;padding:20px 16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#ffffff;">
+
+  <h1 style="font-size:22px;font-weight:bold;color:#222222;text-align:center;line-height:1.5;margin:6px 0 28px;">从零手写一个「不像模板」的个人主页，并白嫖 GitHub Pages 上线</h1>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">我给自己做了一个个人主页：一页讲清楚我是谁、做过什么、怎么联系。没有用任何模板、建站工具，也没有上 React / Vue——<strong style="color:#34618e;">就三个文件：一个 HTML、一个 CSS、一个 JS</strong>，托管在 GitHub Pages 上，全程零成本。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这篇就把它从技术选型、设计系统、信息架构到部署的整套思路讲透。文章本身，就托管在这个站上——你正在看的页面，也是同一套方法做出来的。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">一、先想清楚：为什么是「手写静态页」</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">做个人主页有很多路：Notion / 建站平台、套一个 Hugo / Hexo 主题、上 Next.js 起一个项目。它们都能用，但对一个「就一页、偶尔更新」的个人主页来说，往往是<strong style="color:#34618e;">用力过猛</strong>：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">模板看着省事，但全世界都长一个样，改起来要先读懂别人的目录结构；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">框架要装依赖、要构建、要跟着版本升级，一年后回来可能跑不起来；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">而一个静态页，<strong style="color:#34618e;">十年后用浏览器打开还是原样</strong>，没有任何运行时依赖。</li>
+  </ul>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">所以我的选择是：<strong style="color:#34618e;">原生 HTML + CSS + JavaScript，不引入构建工具，不引入框架。</strong>整个站可以直接双击打开，也可以直接丢上任何静态托管。可控、轻、耐放——对个人主页，这三点比「技术先进」重要得多。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">二、目录结构：三个文件起家</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">整个仓库长这样，没有任何 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">node_modules</code>：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">your-name.github.io/
+├── index.html        # 单页主站：hero / 能力 / 项目 / 经历 / 技能 / 文章 / 联系
+├── resume.html       # 简历页
+├── css/
+│   └── main.css      # 全部样式：设计 token + 组件
+├── js/
+│   └── main.js       # 交互脚本，原生、零依赖
+├── articles/         # 文章页（本文就在这里）
+│   └── ...
+├── images/           # 图片资源
+└── your-resume.pdf   # 可下载简历</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">关键就两件：<strong style="color:#34618e;">所有样式集中在一个 CSS、所有交互集中在一个 JS。</strong>不拆是因为体量小——一个文件搜起来、改起来最快；等真的大到需要拆，再拆不迟。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">三、设计系统：用 CSS 变量统一一切</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">让一个手写页面「不像草台班子」的第一步，是<strong style="color:#34618e;">先定一套设计 token</strong>——颜色、圆角、阴影、过渡曲线全部抽成 CSS 自定义属性，集中在 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">:root</code> 里。后面所有组件只引用变量，不写死颜色。这样想换主题，改几行就全站生效。</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">:root {
+  /* 背景分三层，越靠上越亮，用来拉开层次 */
+  --bg:   #0f172a;
+  --bg-1: #1a2438;
+  --bg-2: #243152;
+
+  /* 文字按重要性分级，而不是到处用纯白 */
+  --tx-0:   #f6f8fc;   /* 标题、主角 */
+  --tx-1:   #c3ccdd;   /* 正文 */
+  --tx-mut: #8893ab;   /* 弱化、辅助说明 */
+
+  /* 强调色只用一个，且只点睛 */
+  --ac:   #5b8cff;
+
+  --r-md: 12px;  --r-lg: 16px;
+  --shadow-sm: 0 4px 16px -6px rgba(0,0,0,.4);
+  --ease: cubic-bezier(.33,0,.2,1);
+}</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">用的时候就很干净：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">.card {
+  background: var(--bg-2);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  color: var(--tx-1);
+  transition: transform .25s var(--ease);
+}
+.card:hover { transform: translateY(-2px); }</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">几条让它显得「有设计」的经验：<strong style="color:#34618e;">背景分层级</strong>（卡片比页面亮一档，自然浮起来）；<strong style="color:#34618e;">文字分等级</strong>（标题用最亮、正文次之、说明用灰，别全是纯白）；<strong style="color:#34618e;">强调色只用一个、且克制</strong>——通篇就一抹钢蓝点睛，比五颜六色高级得多。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">四、信息架构：把首页当成一条转化线</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">个人主页不是简历的复制，而是<strong style="color:#34618e;">一条说服路径</strong>。我把首页排成一条从「你是谁」到「联系你」的线：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">首屏（hero）</strong>：一句话价值主张 + 几个硬核数据，3 秒内让人知道你是干什么的、有多能打；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">能力 → 代表项目 → 经历 → 技能</strong>：由「主张」到「证据」，逐层兑现可信度；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">文章 → 联系</strong>：用文章体现深度，最后落到一个明确的行动入口。</li>
+  </ul>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">结构上每一段都是一个 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">&lt;section&gt;</code>，配一个编号小标题（01 / 02 / 03…），既有秩序感，也方便顶部导航做锚点跳转。语义标签（<code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">section / article / nav / dl</code>）该用就用——对 SEO 和无障碍都有好处。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">五、让它「活」起来：克制的微交互</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">动效不是越多越好。我只保留了几样：导航滚动后加底色、卡片 hover 轻轻抬起、内容进入视口时淡入。最值得说的是<strong style="color:#34618e;">「进场淡入」，以及它的渐进增强写法</strong>——用 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">IntersectionObserver</code>，不到 15 行：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">// 标记 JS 已运行：只有此时才让 .reveal 先隐藏、再淡入。
+// 没有 JS 时内容默认完全可见，绝不会"丢失"。
+document.documentElement.classList.add('js');
+
+const io = new IntersectionObserver((entries, obs) =&gt; {
+  entries.forEach(e =&gt; {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');  // 触发淡入
+      obs.unobserve(e.target);       // 只放一次，放完就不管了
+    }
+  });
+}, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el =&gt; io.observe(el));</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">配套的 CSS 是这套设计的<strong style="color:#34618e;">关键细节</strong>——默认状态下内容是可见的，只有当 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">html</code> 带上 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">.js</code> 类（即脚本确实跑起来了）才允许先隐藏：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">.reveal { opacity: 1; }                       /* 无 JS：正常显示 */
+.js .reveal { opacity: 0; transform: translateY(16px); }
+.js .reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}</pre>
+
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">这就是「渐进增强」：动效是锦上添花，但<strong style="color:#34618e;">脚本一旦没加载或报错，用户看到的是完整内容，而不是一片空白</strong>。一个简历页面，可靠性必须高于花哨——这是我做金融系统养成的本能。</blockquote>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">六、响应式：一个 grid 搞定大半</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">不用任何 UI 框架，靠原生 CSS Grid 就能做出体面的响应式。桌面多列、手机自动叠成单列：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.grid .featured { grid-column: 1 / -1; }   /* 头牌卡跨整行 */
+
+@media (max-width: 760px) {
+  .grid { grid-template-columns: 1fr; }     /* 窄屏：收成一列 */
+}</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">首屏那种「左边讲人、右边放数据」的双栏，也是同一招：桌面 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">grid-template-columns: 6fr 5.5fr</code>，到窄屏直接换成单列堆叠。记得给关键断点（如 920 / 760 / 480px）各看一眼真机。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">七、内容永远比代码重要</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">技术只占这个站的一半，甚至更少。真正花时间的是<strong style="color:#34618e;">措辞</strong>：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">价值主张要能一句话说清，别堆形容词；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">项目用「背景 → 难点 → 方案 → 结果」四段式，<strong style="color:#34618e;">结果优先、用数字说话</strong>；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">指标只写真实的——「亿级资产规模」「线上零故障」这种，宁可少写，不可注水。</li>
+  </ul>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">一个漂亮但内容空洞的页面，不如一个朴素但句句有料的页面。设计是为内容服务的，不是反过来。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">八、部署：白嫖 GitHub Pages</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这是最爽的一步——<strong style="color:#34618e;">免费、自带 HTTPS、推一次代码就自动上线</strong>。唯一的硬性要求：仓库名必须是 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">你的用户名.github.io</code>。</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;"># 在 GitHub 新建一个名为 &lt;用户名&gt;.github.io 的仓库，然后：
+git init
+git add .
+git commit -m "init: 个人主页"
+git branch -M main
+git remote add origin https://github.com/&lt;用户名&gt;/&lt;用户名&gt;.github.io.git
+git push -u origin main</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">推完去仓库的 <strong style="color:#34618e;">Settings → Pages</strong>，把 Source 设为 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">main</code> 分支的根目录，保存。等一两分钟，打开 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">https://你的用户名.github.io</code> 就能看到了。之后每次 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">git push</code>，几分钟内自动更新——这篇文章也是这么推上线的。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">想用自己的域名也行：在仓库根加一个 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">CNAME</code> 文件写上域名，再去域名服务商把解析指到 GitHub Pages 即可。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">写在最后：先上线，再打磨</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">别等「完美」了才上线。先把一个能看的版本推上去，拿到一个真实的网址，然后小步迭代——一次改一个区块、一次调一处间距，<strong style="color:#34618e;">每次改动都是一个小 commit</strong>。这个站我自己也是这么一轮一轮磨出来的：先有骨架，再调首屏权重、再加文章区、再收口联系方式。</p>
+
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">工具会过时，框架会换代，但「三个文件 + 一次 push」这套最朴素的组合，几乎不会让你失望。把复杂留给该复杂的地方，个人主页，简单就好。</blockquote>
+
+  <p style="margin:28px 0 8px;font-size:14px;color:#888888;line-height:1.8;text-align:center;">—— 如果这篇对你有用，欢迎在我的主页看看其它内容。</p>
+
+</section>
+</body>
+</html>
