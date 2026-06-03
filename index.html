@@ -115,28 +115,32 @@
                               <div class="cap-card__i"><i class="fas fa-people-arrows"></i></div>
                               <h3>技术 Owner 与系统交付</h3>
                               <p class="def">端到端负责需求、方案、风险与跨团队协调。</p>
-                              <p class="scn">制定架构与提交规范、沉淀技术框架并培养团队，作为技术 Owner 交付多套核心生产系统。</p>
+                              <p class="scn">把业务流程拆成系统边界、接口契约、验收口径和上线风险清单，推动产品、业务、开发、测试在同一张图上协作。</p>
+                              <p class="cap-card__proof">实例：在核心系统重构中，我先统一分支、提交、代码分层和接口评审规则，再带新人按同一套框架交付，减少“每个人一套写法”带来的维护成本。</p>
                          </article>
 
                          <article class="cap-card reveal">
                               <div class="cap-card__i"><i class="fas fa-building-columns"></i></div>
                               <h3>金融核心系统架构</h3>
                               <p class="def">设计交易、清算、账户等高价值核心链路。</p>
-                              <p class="scn">主导交易与清算核心系统重构，围绕资金安全、稳定性与可演进性做架构设计。</p>
+                              <p class="scn">在资金、账户、清算等链路里，优先处理一致性、幂等、对账、灰度和可回滚，而不是只追求功能上线。</p>
+                              <p class="cap-card__proof">实例：做账户与清算核心重构时，把存量逻辑拆成可并行验证的阶段，先保证新老链路结果可核对，再逐步切换关键流程。</p>
                          </article>
 
                          <article class="cap-card reveal">
                               <div class="cap-card__i"><i class="fas fa-diagram-project"></i></div>
                               <h3>分布式与高可用设计</h3>
                               <p class="def">在高并发与强一致约束下保证系统稳定。</p>
-                              <p class="scn">以微服务、消息驱动与链路优化支撑核心交易的稳定运行与演进。</p>
+                              <p class="scn">用消息解耦、异步补偿、限流降级、灰度发布和流量回放，降低系统演进对线上链路的冲击。</p>
+                              <p class="cap-card__proof">实例：在物流核心系统改造中，通过流量回放验证重构后的关键路径，再配合灰度发布逐步放量，避免一次性切换带来的不可控风险。</p>
                          </article>
 
                          <article class="cap-card reveal">
                               <div class="cap-card__i"><i class="fas fa-robot"></i></div>
                               <h3>AI Agent 工程化落地</h3>
                               <p class="def">把大模型能力做成可控、可执行的生产系统。</p>
-                              <p class="scn">基于 AgentScope / A2A 与 LangGraph，落地多智能体协作与投研自动化。</p>
+                              <p class="scn">把 LLM 从“回答问题”推进到“读取上下文、拆解任务、调用工具、人工确认、可追踪执行”的工作流。</p>
+                              <p class="cap-card__proof">实例：在投研与投后场景中，用 LangGraph 编排信息提取、分析、汇总与人工确认节点，让 AI 结果进入业务系统，而不是停在聊天框里。</p>
                          </article>
                     </div>
 
@@ -146,19 +150,19 @@
                          <div class="workstyle__grid">
                               <div class="ws">
                                    <h4>现场沟通与对齐</h4>
-                                   <p>深入<strong>业务现场</strong>，与业务、产品、外包多方对齐，把分歧<strong>收敛成共识</strong>。</p>
+                                   <p>把口头诉求落成流程图、边界清单和验收标准；遇到分歧时，用真实业务路径和异常场景把讨论<strong>收敛成共识</strong>。</p>
                               </div>
                               <div class="ws">
                                    <h4>表达与文档沉淀</h4>
-                                   <p>把复杂方案讲清楚；沉淀新人落地、分支合并、整洁代码规范与中间件分享，让团队产出<strong>可复制</strong>。</p>
+                                   <p>把复杂方案讲清楚；沉淀新人落地、分支合并、整洁代码规范与中间件分享，让团队产出<strong>可复制</strong>，而不是依赖个人经验。</p>
                               </div>
                               <div class="ws">
                                    <h4>端到端设计</h4>
-                                   <p>从<strong>需求澄清、交互原型到架构方案</strong>一体推进。</p>
+                                   <p>从<strong>需求澄清、交互原型到架构方案</strong>一体推进，先把业务操作闭环跑通，再拆后端模型和接口。</p>
                               </div>
                               <div class="ws">
                                    <h4>全周期交付负责</h4>
-                                   <p>作为复杂业务交付负责人，统筹系统设计、资源协调、任务拆解与验收上线，<strong>直到业务真正运转</strong>。</p>
+                                   <p>作为复杂业务交付负责人，统筹系统设计、资源协调、任务拆解与验收上线，持续盯到业务人员能稳定使用。</p>
                               </div>
                          </div>
                     </div>
@@ -186,7 +190,7 @@
                                    </div>
                               </div>
                               <p class="project__lead">
-                                   探索让多智能体协作嵌入组织日常工作流，而不是停在一个聊天窗口里。
+                                   探索让多智能体协作嵌入组织日常工作流：从讨论中提炼任务，由 AI 起草方案，再由人确认后进入执行与追踪。
                               </p>
                               <ul class="project__highlights">
                                    <li>多智能体协作与协商执行</li>
@@ -220,6 +224,10 @@
                                              <p class="facet__v">建立 <strong>Human-in-the-loop</strong> 确认机制，任务可自动生成草稿、人工确认后创建并追踪；AI 建议<strong>可理解、可确认、可执行</strong>。</p>
                                         </div>
                                    </div>
+                                   <div class="project__evidence">
+                                        <p class="evidence__k">我具体做了什么</p>
+                                        <p class="evidence__v">负责从 0 到 1 梳理产品闭环：定义 SuperAgent 与业务智能体的职责边界、设计任务草稿与人工确认流程、处理上下文截取与多智能体结果汇总，确保 AI 只给出可审查建议，关键动作仍由人确认。</p>
+                                   </div>
                               </details>
                          </article>
 
@@ -233,7 +241,7 @@
                                    </div>
                               </div>
                               <p class="project__lead">
-                                   支撑多类金融产品交易、账户与清算的核心系统，从架构到落地由我主导。
+                                   支撑多类金融产品交易、账户与清算的核心系统，重点解决存量系统演进、资金链路一致性和核心流程稳定性。
                               </p>
                               <ul class="project__highlights">
                                    <li>支撑高价值资产链路</li>
@@ -260,12 +268,16 @@
                                         </div>
                                         <div class="facet">
                                              <p class="facet__k">解决方案</p>
-                                             <p class="facet__v">主导交易所 2.0 架构设计，搭建统一运营平台，完成<strong>账户体系与清算核心系统重构</strong>，落地高可用方案与标准化代码规范。</p>
+                                             <p class="facet__v">主导核心系统架构设计，搭建统一运营平台，推进<strong>账户体系与清算核心系统重构</strong>，落地高可用方案与标准化代码规范。</p>
                                         </div>
                                         <div class="facet">
                                              <p class="facet__k">量化结果</p>
                                              <p class="facet__v">支撑平台核心资产链路稳定运行；建立<strong>标准化架构与代码规范</strong>、统一技术框架，降低新人上手成本、提升团队交付一致性。</p>
                                         </div>
+                                   </div>
+                                   <div class="project__evidence">
+                                        <p class="evidence__k">我具体做了什么</p>
+                                        <p class="evidence__v">把交易、账户、清算、运营之间的关系重新拆成清晰模块，先处理账户模型、清算状态流转、异常补偿和对账边界，再制定灰度迁移方案，避免重构直接冲击线上核心链路。</p>
                                    </div>
                               </details>
                          </article>
@@ -280,7 +292,7 @@
                                    </div>
                               </div>
                               <p class="project__lead">
-                                   把 LLM 以 Agent 工作流接入投研与投后管理流程，辅助提升分析效率。
+                                   把 LLM 以 Agent 工作流接入投研与投后管理流程，让 AI 参与资料提取、结构化分析、异常归因和结果汇总。
                               </p>
                               <ul class="project__highlights">
                                    <li>LangGraph 工作流接入投研流程</li>
@@ -306,12 +318,16 @@
                                         </div>
                                         <div class="facet">
                                              <p class="facet__k">解决方案</p>
-                                             <p class="facet__v">用 <strong>LangGraph</strong> 构建 Agent 工作流并集成进业务系统，参与投后管理相关能力重构。</p>
+                                             <p class="facet__v">用 <strong>LangGraph</strong> 构建 Agent 工作流并集成进业务系统，参与投后管理相关能力重构，将模型输出纳入可追踪流程。</p>
                                         </div>
                                         <div class="facet">
                                              <p class="facet__k">结果</p>
-                                             <p class="facet__v">投研分析走向<strong>智能化</strong>；投后门店<strong>异常情况可视化与自动化处理</strong>。</p>
+                                             <p class="facet__v">投研分析从人工整理走向<strong>流程化辅助</strong>；投后异常从零散排查转为<strong>可视化识别与跟进</strong>。</p>
                                         </div>
+                                   </div>
+                                   <div class="project__evidence">
+                                        <p class="evidence__k">我具体做了什么</p>
+                                        <p class="evidence__v">将“读材料、抽信息、做判断、给结论”的人工过程拆成多个节点：每一步有输入、输出和失败兜底；对关键结论保留人工复核，避免模型直接替代业务判断。</p>
                                    </div>
                               </details>
                          </article>
@@ -327,7 +343,7 @@
                                    <span class="mini__co">大型物流平台 · 服务负责人</span>
                               </div>
                               <p class="mini__desc">
-                                   负责国际集运仓核心系统。主导以 <strong>DDD</strong> 重构业务架构，并以<strong>流量回放与灰度发布</strong>保障大流量下的平稳演进，提升系统吞吐与交付稳定性。
+                                   负责国际集运仓核心系统。面对业务规则复杂、链路长、改造不能影响履约的约束，主导以 <strong>DDD</strong> 重构业务架构，并以<strong>流量回放与灰度发布</strong>验证核心路径，提升系统吞吐与交付稳定性。
                               </p>
                               <div class="stack">
                                    <span>Java</span><span>Spring Cloud</span><span>DDD</span><span>MySQL</span>
@@ -340,7 +356,7 @@
                                    <span class="mini__co">金融软件服务商 · 交付负责人</span>
                               </div>
                               <p class="mini__desc">
-                                   为多家券商客户交付证券<strong>事后风控系统</strong>。设计「采集中间件 + 规则引擎」的风控链路，主导多次大版本平滑升级，保障交付质量与业务连续性。
+                                   为多家券商客户交付证券<strong>事后风控系统</strong>。围绕行情/委托/成交等数据采集、规则执行与告警闭环，设计「采集中间件 + 规则引擎」链路，主导多次大版本平滑升级。
                               </p>
                               <div class="stack">
                                    <span>Java</span><span>Spring Boot</span><span>自研中间件</span><span>风控引擎</span>
@@ -353,7 +369,7 @@
                                    <span class="mini__co">大型物流科技公司 · 服务负责人</span>
                               </div>
                               <p class="mini__desc">
-                                   主导<strong>代收保费系统</strong>——在线上支付尚未普及的阶段，以"物流网络 + 上门代收"完成保险保单的签约与履约闭环。作为服务负责人保障系统稳定运行，并主导核心链路的<strong>性能与稳定性优化</strong>。
+                                   主导<strong>代收保费系统</strong>——在线上支付尚未普及的阶段，以"物流网络 + 上门代收"完成保险保单的签约与履约闭环。重点处理收款状态、保单状态、物流履约之间的一致性，并主导核心链路的<strong>性能与稳定性优化</strong>。
                               </p>
                               <div class="stack">
                                    <span>Java</span><span>Spring</span><span>MySQL</span><span>MQ</span>
@@ -366,7 +382,7 @@
                                    <span class="mini__co">第三方支付机构 · Java 工程师</span>
                               </div>
                               <p class="mini__desc">
-                                   负责 POS 收单下的<strong>商户与多级分润系统</strong>，支撑商户侧的交易、清算与提现，以及代理商侧的<strong>多级代理与多级分润</strong>体系。
+                                   负责 POS 收单下的<strong>商户与多级分润系统</strong>，支撑商户侧交易、清算、提现，以及代理商侧的<strong>多级代理与多级分润</strong>计算，熟悉支付清结算的基础模型。
                               </p>
                               <div class="stack">
                                    <span>Java</span><span>Spring</span><span>MySQL</span>
@@ -395,8 +411,8 @@
                                    <span class="tl__date">2023.06 — 至今</span>
                               </div>
                               <p class="tl__desc">
-                                   作为技术 Owner 主导交易与清算核心系统架构设计及核心模块重构；
-                                   推进 AI 应用工程化（智能投融资分析、多智能体协作平台）等生产系统能力的落地。
+                                   作为技术 Owner 主导交易与清算核心系统架构设计及核心模块重构；推进 AI 应用工程化（智能投融资分析、多智能体协作平台）等生产系统能力的落地。
+                                   典型场景：在核心链路重构中，先梳理账户、清算、运营平台之间的状态关系，再设计分阶段迁移和人工校验机制，保证系统演进过程可控。
                               </p>
                          </div>
 
@@ -409,6 +425,7 @@
                               </div>
                               <p class="tl__desc">
                                    作为服务负责人，负责<strong>国际集运仓核心系统</strong>；主导 <strong>DDD</strong> 架构重构，以流量回放与灰度发布保障大流量下平稳演进，提升系统吞吐与交付稳定性。
+                                   典型场景：把仓储、订单、履约、异常处理等概念重新建模，先验证高频路径，再逐步迁移复杂边界场景。
                               </p>
                          </div>
 
@@ -421,6 +438,7 @@
                               </div>
                               <p class="tl__desc">
                                    作为交付负责人，为多家券商客户交付证券<strong>事后风控系统</strong>（采集中间件 + 规则引擎）；主导多次大版本平滑升级，保障交付质量与业务连续性。
+                                   典型场景：在客户现场把监管口径、数据采集、规则执行和告警处理拆成可验收模块，减少交付后期反复返工。
                               </p>
                          </div>
 
@@ -433,6 +451,7 @@
                               </div>
                               <p class="tl__desc">
                                    作为服务负责人，主导<strong>代收保费系统</strong>——在线上支付尚未普及的阶段，以物流网络完成保险保单的签约与<strong>上门代收</strong>履约闭环；主导核心链路的性能与稳定性优化。
+                                   典型场景：围绕收款、核销、保单状态同步设计异常补偿，降低人工对账和状态不一致带来的处理成本。
                               </p>
                          </div>
 
@@ -445,6 +464,7 @@
                               </div>
                               <p class="tl__desc">
                                    负责 POS 收单下的<strong>支付商户与多级分润系统</strong>，支撑商户清结算与代理商<strong>多级分润</strong>体系。
+                                   典型场景：围绕商户入网、交易入账、代理分润和提现流程做后台能力建设，打下支付清结算系统基础。
                               </p>
                          </div>
                     </div>
