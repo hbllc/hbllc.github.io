@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>把多智能体协作做进企业真实工作流：AIWS 的架构与取舍 · 李立川</title>
+<title>把多智能体协作做进组织工作流：架构与取舍 · 李立川</title>
 </head>
 <body style="margin:0;background:#ffffff;">
 <!-- 返回主站（在 section 外，全选复制到公众号时不会被带入） -->
@@ -19,15 +19,15 @@
 -->
 <section style="max-width:677px;margin:0 auto;padding:20px 16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#ffffff;">
 
-  <h1 style="font-size:22px;font-weight:bold;color:#222222;text-align:center;line-height:1.5;margin:6px 0 28px;">把多智能体协作做进企业真实工作流：AIWS 的架构与取舍</h1>
+  <h1 style="font-size:22px;font-weight:bold;color:#222222;text-align:center;line-height:1.5;margin:6px 0 28px;">把多智能体协作做进组织工作流：架构与取舍</h1>
 
   <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">过去一年，"AI Agent" 几乎成了每个团队的必选项。但大多数落地，最后都长成同一个样子：一个独立的聊天框，问它点什么、它答点什么，然后——就没有然后了。</p>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">我在做的 AIWS（智能组织协作平台）想解决的，恰恰是这个"然后"：<strong style="color:#34618e;">让多智能体协作真正嵌入企业的日常工作流，而不是停在一个聊天窗口里。</strong>这篇文章讲我们的架构选择，以及更重要的——那些"为什么这么选"的取舍。</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">我关注的方向，恰恰是这个"然后"：<strong style="color:#34618e;">让多智能体协作嵌入组织的日常工作流，而不是停在一个聊天窗口里。</strong>这篇文章用抽象后的项目经验，讲一套架构选择，以及更重要的——那些"为什么这么选"的取舍。</p>
 
   <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">一、为什么"又一个 AI Chat"没用</h2>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">先说真问题。组织内部每天都在产生大量讨论：群里对齐需求、会上拍板、临时协商。但这些讨论<strong style="color:#34618e;">沉淀成可执行任务的成本极高</strong>——讨论完了，谁来建任务、谁来跟进、状态同步给谁，大量靠人肉。</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">先说真问题。组织内部每天都在产生大量讨论：群里对齐需求、会上拍板、临时协商。但这些讨论<strong style="color:#34618e;">沉淀成可执行任务的成本极高</strong>——讨论完了，谁来建任务、谁来跟进、状态同步给谁，仍然大量依赖人工。</p>
 
   <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">而市面上的 AI 助手，普遍停在"独立入口"：</p>
 
@@ -41,7 +41,7 @@
 
   <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">二、目标与约束</h2>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">AIWS 的设计目标，可以浓缩成一句话：</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这类系统的设计目标，可以浓缩成一句话：</p>
 
   <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">把 AI 从"会聊天"变成"能在组织里可控地做事"。</blockquote>
 
@@ -55,34 +55,34 @@
 
   <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">三、整体架构</h2>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">技术栈（真实）：</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">一套可落地的技术组合可以抽象为：</p>
 
   <ul style="margin:16px 0;padding-left:1.3em;">
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">前端</strong>：React + TypeScript + Vite + TailwindCSS</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">后端</strong>：Python + FastAPI + SQLAlchemy</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">AI 层</strong>：AgentScope + A2A（Agent-to-Agent）多智能体协议 + OpenAI 兼容 API</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">数据</strong>：MySQL</li>
-    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">集成</strong>：企业微信（身份、消息、协作入口）</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">集成</strong>：IM / 协作平台（身份、消息、协作入口）</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">实时</strong>：SSE 事件推送</li>
   </ul>
 
   <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">一个简化的分层视图：</p>
 
   <section style="margin:22px 0;">
-    <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px;text-align:center;font-size:13px;color:#2b2b2b;line-height:1.5;">企业微信 / Web 前端<span style="color:#888;">（协作入口）</span></div>
+    <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px;text-align:center;font-size:13px;color:#2b2b2b;line-height:1.5;">IM / Web 前端<span style="color:#888;">（协作入口）</span></div>
     <div style="text-align:center;color:#34618e;font-size:15px;line-height:1;margin:5px 0;">↓</div>
     <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px;text-align:center;font-size:13px;color:#2b2b2b;line-height:1.5;"><strong style="color:#34618e;">FastAPI 网关</strong>　<span style="color:#888;">认证 / 路由 / SSE</span></div>
     <div style="text-align:center;color:#34618e;font-size:15px;line-height:1;margin:5px 0;">↓</div>
     <table style="width:100%;border-collapse:collapse;table-layout:fixed;"><tr>
       <td style="width:33.3%;vertical-align:top;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:9px 6px;font-size:12px;color:#2b2b2b;text-align:center;line-height:1.55;height:100%;box-sizing:border-box;"><strong style="color:#34618e;">SuperAgent</strong><br>意图理解 / 路由 / 汇总</div></td>
       <td style="width:33.3%;vertical-align:top;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:9px 6px;font-size:12px;color:#2b2b2b;text-align:center;line-height:1.55;height:100%;box-sizing:border-box;"><strong style="color:#34618e;">业务线自助配置的智能体</strong><br>各带知识库，后台自动生成"能力概要"</div></td>
-      <td style="width:33.3%;vertical-align:top;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:9px 6px;font-size:12px;color:#2b2b2b;text-align:center;line-height:1.55;height:100%;box-sizing:border-box;"><strong style="color:#34618e;">工具层</strong><br>任务系统、组织数据、业务 API</div></td>
+      <td style="width:33.3%;vertical-align:top;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:9px 6px;font-size:12px;color:#2b2b2b;text-align:center;line-height:1.55;height:100%;box-sizing:border-box;"><strong style="color:#34618e;">工具层</strong><br>任务、组织上下文、业务能力接口</div></td>
     </tr></table>
     <div style="text-align:center;font-size:12px;color:#888888;margin:8px 0;line-height:1.6;">SuperAgent 按概要匹配 → 分发给最相关 ≤2 个 → 并行作答 → 汇总<span style="color:#34618e;">（A2A 协议）</span></div>
     <div style="text-align:center;color:#34618e;font-size:15px;line-height:1;margin:5px 0;">↓</div>
     <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px;text-align:center;font-size:13px;color:#2b2b2b;line-height:1.5;">上下文管理　·　<strong style="color:#34618e;">Human-in-the-loop 确认</strong></div>
     <div style="text-align:center;color:#34618e;font-size:15px;line-height:1;margin:5px 0;">↓</div>
-    <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px;text-align:center;font-size:13px;color:#2b2b2b;line-height:1.5;">MySQL / 业务系统</div>
+    <div style="border:1px solid #c9d6e3;background:#eef3f8;border-radius:6px;padding:11px;text-align:center;font-size:13px;color:#2b2b2b;line-height:1.5;">数据库 / 业务系统</div>
   </section>
 
   <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">核心是中间这层：<strong style="color:#34618e;">业务线自助配置带知识库的智能体，后台为每个智能体自动生成能力概要；SuperAgent 据此做动态路由——用户未指定时分发给最相关的最多两个智能体并行作答，再汇总返回。所有"会改变世界"的动作，都要穿过 Human-in-the-loop 这道闸。</strong></p>
@@ -91,24 +91,24 @@
 
   <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这部分是重点——架构图谁都会画，真正体现工程判断的是这几个"为什么"。</p>
 
-  <h3 style="font-size:17px;font-weight:bold;color:#2b2b2b;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid #e6e6e6;">1. 嵌入 IM（企业微信）：让 AI 待在"工作真正发生的地方"</h3>
+  <h3 style="font-size:17px;font-weight:bold;color:#2b2b2b;margin:30px 0 12px;padding-bottom:6px;border-bottom:1px solid #e6e6e6;">1. 嵌入 IM：让 AI 待在"工作真正发生的地方"</h3>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">要让 AI"进入真实工作流"，第一步就是<strong style="color:#34618e;">进入 IM</strong>——因为组织里的讨论、对齐、临时协商，大量就发生在企业微信的群聊里。AI 如果不在那里，它永远是"另开一个窗口"的外人。</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">要让 AI"进入工作流"，第一步就是<strong style="color:#34618e;">进入 IM</strong>——因为组织里的讨论、对齐、临时协商，大量就发生在协作群聊里。AI 如果不在那里，它永远是"另开一个窗口"的外人。</p>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">所以我们把企业微信作为<strong style="color:#34618e;">第一协作入口</strong>，而不是又做一个独立 App：</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">所以更合理的设计，是把常用 IM / 协作平台作为<strong style="color:#34618e;">第一协作入口</strong>，而不是又做一个独立 App：</p>
 
   <ul style="margin:16px 0;padding-left:1.3em;">
-    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">身份与组织直接复用企业微信</strong>，AI 天然知道"谁在说话、属于哪个团队"；</li>
-    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">在群里 <strong style="color:#34618e;">@ 智能体</strong>即可发起请求，AI 自动读取 <strong style="color:#34618e;">@ 之前最近一段群聊消息</strong>作为上下文——"把刚才那段讨论拆成任务"才有真正的"刚才"，不必让用户复述背景；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">身份与组织关系复用协作平台</strong>，AI 能理解"谁在说话、属于哪个团队"；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">在群里 <strong style="color:#34618e;">@ 智能体</strong>即可发起请求，AI 按权限读取必要的近期上下文——"把刚才那段讨论拆成任务"才有真正的"刚才"，不必让用户复述背景；</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">把"刚才那段讨论"<strong style="color:#34618e;">直接起草成任务</strong>（草稿），人确认后建任务，并把进展回推到 IM 追踪；</li>
-    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">确认卡片、任务进展、通知通过 <strong style="color:#34618e;">SSE / 企业微信消息</strong>实时回推，形成"讨论 → 任务 → 跟进"的闭环，而不是把人甩去另一个系统。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">确认卡片、任务进展、通知通过 <strong style="color:#34618e;">实时推送 / 协作消息</strong>回到原入口，形成"讨论 → 任务 → 跟进"的闭环，而不是把人甩去另一个系统。</li>
   </ul>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">更进一步：<strong style="color:#34618e;">群聊里的讨论不会随聊天流走——它们会由 LLM 自动提炼成要点 / 问答对，沉淀进知识库</strong>（顺手做了去噪和结构化，而非整段照搬）。一次性的对话因此变成可复用的组织知识，再反哺给智能体（见下一节）——讨论越多，智能体越懂这个组织。于是 IM <strong style="color:#34618e;">既是协作入口，也是知识的来源</strong>，和"智能体带知识库"接成一个数据飞轮：</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">更进一步：<strong style="color:#34618e;">有价值的讨论可以在合规授权下被提炼成要点 / 问答对，沉淀进知识库</strong>（做去噪和结构化，而非整段照搬）。一次性的对话因此变成可复用的组织知识，再反哺给智能体（见下一节）。于是 IM <strong style="color:#34618e;">既是协作入口，也可以成为知识沉淀入口</strong>，和"智能体带知识库"接成一个数据飞轮：</p>
 
   <section style="margin:22px 0;">
     <table style="width:100%;border-collapse:collapse;table-layout:fixed;"><tr>
-      <td style="width:30%;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:10px 4px;text-align:center;font-size:12px;color:#2b2b2b;line-height:1.4;">群聊讨论</div></td>
+      <td style="width:30%;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:10px 4px;text-align:center;font-size:12px;color:#2b2b2b;line-height:1.4;">授权讨论内容</div></td>
       <td style="width:5%;text-align:center;color:#34618e;font-size:13px;">→</td>
       <td style="width:25%;padding:3px;"><div style="border:1px solid #c9d6e3;background:#f7fafd;border-radius:6px;padding:10px 4px;text-align:center;font-size:12px;color:#2b2b2b;line-height:1.4;">知识库</div></td>
       <td style="width:5%;text-align:center;color:#34618e;font-size:13px;">→</td>
@@ -127,7 +127,7 @@
 
   <ul style="margin:16px 0;padding-left:1.3em;">
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">业务线自助配置自己的智能体</strong>（连同各自的知识库），平台不替它们定义边界；</li>
-    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">后台为每个智能体的知识库<strong style="color:#34618e;">静默生成一份"能力概要"</strong>，作为它"能答什么"的索引；</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">后台为每个智能体的知识库<strong style="color:#34618e;">自动生成一份"能力概要"</strong>，作为它"能答什么"的索引；</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">用户提问时若<strong style="color:#34618e;">没有指定</strong>某个智能体，<strong style="color:#34618e;">SuperAgent 基于这些概要做匹配</strong>，把问题分发给<strong style="color:#34618e;">最相关的最多 2 个智能体</strong>并行作答；</li>
     <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">再由 SuperAgent 把多方回答<strong style="color:#34618e;">汇总成一份概要</strong>返回给用户。</li>
   </ul>
@@ -216,9 +216,9 @@
 
   <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">七、结果与下一步</h2>
 
-  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">AIWS 目前处在<strong style="color:#34618e;">内部试点 / 调研阶段</strong>：核心闭环（IM 里发起 → 多智能体协作作答 → 起草任务 → 人工确认 → 跟踪）已经跑通，正在小范围真实场景里验证、打磨。还谈不上大规模铺开，但它已经让我更确信一件事：</p>
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">从抽象后的实践看，核心闭环（IM 里发起 → 多智能体协作作答 → 起草任务 → 人工确认 → 跟踪）是可行的。真正难的不是 demo 跑通，而是在权限、上下文、确认机制和可观测性之间找到平衡。它也让我更确信一件事：</p>
 
-  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">AI 真正的难点不在模型，而在<strong style="color:#34618e;">怎么把它工程化地、可控地接进真实业务流程</strong>。</blockquote>
+  <blockquote style="margin:20px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#555555;font-size:15px;line-height:1.8;">AI 真正的难点不在模型，而在<strong style="color:#34618e;">怎么把它工程化地、可控地接进业务流程</strong>。</blockquote>
 
   <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">下一步我们会在<strong style="color:#34618e;">可观测与评测</strong>上继续投入，让"AI 可靠性"从经验变成可度量的工程能力。</p>
 
@@ -228,7 +228,8 @@
   <section style="margin:24px 0 8px;padding:18px 20px;background:#f5f8fb;border:1px solid #e3ebf3;border-radius:8px;">
     <p style="margin:0 0 6px;font-size:15px;color:#222222;line-height:1.8;"><strong style="color:#34618e;">关于作者</strong></p>
     <p style="margin:0 0 10px;font-size:14px;color:#555555;line-height:1.8;">李立川 · 金融科技架构师 / AI Engineer</p>
-    <p style="margin:0;font-size:14px;color:#555555;line-height:1.8;">个人主页（更多项目与简历）：<br><strong style="color:#34618e;">hbllc.github.io</strong></p>
+    <p style="margin:0 0 10px;font-size:14px;color:#555555;line-height:1.8;">个人主页（更多项目与简历）：<br><strong style="color:#34618e;">hbllc.github.io</strong></p>
+    <p style="margin:0;font-size:12px;color:#888888;line-height:1.7;">说明：本文为个人技术总结，案例与系统细节已做抽象化处理，不代表任何雇主、客户或合作方立场。</p>
   </section>
 
   <p style="margin:18px 0 0;font-size:13px;color:#999999;line-height:1.7;text-align:center;">点击文末「阅读原文」可直达个人主页 →</p>
