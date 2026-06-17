@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="传统会员制交易所系统设计：用最小 DDD 领域模型拆解产品、会员、账户资产、订单撮合、行情、清算账务与运营监管。">
+<title>传统会员制交易所系统设计：从产品上架到交易清算的最小 DDD 模型 · 李立川</title>
+</head>
+<body style="margin:0;background:#ffffff;">
+<nav style="max-width:760px;margin:0 auto;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;">
+  <a href="../index.html" style="color:#34618e;text-decoration:none;font-size:14px;">← 返回 李立川 · 首页</a>
+  <span style="color:#c0c7cf;margin:0 8px;">/</span>
+  <a href="./" style="color:#34618e;text-decoration:none;font-size:14px;">文章目录</a>
+</nav>
+
+<section style="max-width:760px;margin:0 auto;padding:20px 18px 64px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#ffffff;">
+
+  <p style="margin:0 0 10px;text-align:center;color:#7a8794;font-size:13px;letter-spacing:0.12em;">金融核心系统 · 交易所架构 · DDD</p>
+  <h1 style="font-size:24px;font-weight:bold;color:#222222;text-align:center;line-height:1.5;margin:6px 0 28px;">传统会员制交易所系统设计：从产品上架到交易清算的最小 DDD 模型</h1>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">设计交易所系统时，最容易犯的错误是上来就拆很多系统：用户系统、资金账户、持仓账户、交易账户、订单系统、撮合系统、清算系统、结算系统、监管系统、后台系统……每个名词都对，但第一版如果照着大交易所拆，团队很快会被复杂度压垮。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">如果是一个传统会员制交易所，从最小可运行系统出发，我更建议先做“边界清楚的模块化单体”：领域边界先划清，表和事件先留好，服务不要过早拆碎。</p>
+
+  <blockquote style="margin:22px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#4d5965;font-size:15px;line-height:1.8;">第一版的目标不是系统名词完整，而是让主链路闭环：产品能上架，会员能交易，订单能成交，成交能清算，资产能对账，操作能审计。</blockquote>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">一、先定一个关键前提：这是会员制交易所</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">传统交易所通常不是直接面对每个自然人投资者，而是面对会员、券商、做市商、清算会员等市场参与主体。因此账户模型要先分两层：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">User</strong>：登录系统的人，负责登录、角色、权限、审计。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">Member</strong>：市场中的交易主体，负责交易资格、资金归属、持仓归属和清算责任。</li>
+  </ul>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">也就是说，登录用户不是资产归属主体。一个操作员登录系统代表某个会员下单，订单上应该同时记录：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">operatorUserId  // 谁操作
+memberId        // 谁交易、谁承担资金和持仓变化
+productId       // 交易什么
+orderId         // 订单</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这能避免一个常见混乱：把登录账户、交易账户、资金账户、持仓账户混成一团。第一版可以不引入 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">tradingAccountId</code>、<code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">cashAccountId</code>、<code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">positionAccountId</code> 三套业务账户 ID。资金和持仓都归属于 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">memberId</code>，余额表和持仓表有自己的数据主键即可。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">二、最小领域划分：4 个核心域 + 1 个支撑域</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">人员少、业务还在发展时，不要拆太细。一个合理的最小 DDD 划分是：</p>
+
+  <ol style="margin:16px 0;padding-left:1.4em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">产品市场域</strong>：产品、市场、交易规则、交易时段、手续费配置。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">账户资产域</strong>：用户、会员、资金余额、持仓余额、资金流水、持仓流水。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">交易域</strong>：订单、撤单、前置校验、撮合、成交。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">清结算账务域</strong>：清算记录、应收应付、落账、对账、日终结算。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">运营监管域</strong>：产品配置、停复牌、资金/持仓调整审批、操作审计、报表查询。</li>
+  </ol>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这里的关键不是名字，而是职责边界：产品决定什么能交易，会员决定谁在交易，订单承载交易意图，撮合生成成交事实，清算把成交变成资产变化，流水保证可追溯。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">三、一条产品完整流程怎么走</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">从一个产品发行上架，到行情披露、下单、撮合、清算、运营管理，主流程可以压成一条链：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">产品上架
+  ↓
+交易规则配置
+  ↓
+行情基础披露
+  ↓
+会员账户与资产准备
+  ↓
+用户代表会员下单
+  ↓
+前置校验与资金/持仓冻结
+  ↓
+撮合成交
+  ↓
+成交回报与行情更新
+  ↓
+清算与落账
+  ↓
+对账、报表、审计、运营管理</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">注意，撮合只是“交易达成”的地方，清算账务才是“权利和资产变化”的依据。不要把成交表直接当成资产变动表，否则后续费用、撤销、冲正、重算和对账都会变难。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">四、核心 ID 流转</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">第一版 ID 不要设计得太复杂。主链路里真正需要流转的是：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">userId        // 操作人
+memberId      // 交易主体 / 资金归属 / 持仓归属
+productId     // 产品
+orderId       // 订单
+tradeId       // 成交
+clearingId    // 清算
+ledgerEntryId // 资金/持仓流水</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">买单校验时，用 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">memberId + currency</code> 查资金余额；卖单校验时，用 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">memberId + productId</code> 查持仓余额。资金余额和持仓余额有自己的数据主键，但业务上它们都属于会员。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">五、第一版核心表</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">如果只看最小可运行系统，核心业务表可以这样收敛：</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">产品与规则：
+- product
+- product_change
+- product_trading_config
+- fee_config
+
+用户与会员：
+- user
+- member
+
+交易：
+- order
+- order_event
+- trade
+
+资产：
+- cash_balance
+- position_balance
+- cash_ledger
+- position_ledger
+- cash_change_request
+- position_change_request
+
+清算与审计：
+- clearing_record
+- operation_audit_log</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这里有几个取舍：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">member_user 可以先不建</strong>：如果一个会员只有一个主账号，可先用 member.ownerUserId。等需要多操作员、多角色授权时再拆。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">fee_detail 可以先不建</strong>：费用扣减结果可以进入 cash_ledger。等费用规则复杂、需要独立账单时再补费用明细。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">order_event 建议保留</strong>：订单表只保存当前状态，订单事件保存生命周期，排查问题时非常关键。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">clearing_record 建议保留</strong>：成交是撮合事实，清算是资产变动依据，不要混在一张表里。</li>
+  </ul>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">六、什么时候再拆账户</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">第一版不用急着拆交易账户、资金账户、持仓账户。但这不代表永远不拆。等出现这些场景，再拆就有意义：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">一个会员有多个交易席位或交易单元。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">一个会员有自营、经纪、做市等多种业务账户。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">同一会员下有多个客户子账户。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">不同市场、币种、清算路径需要严格隔离资金。</li>
+  </ul>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">在这些复杂度出现前，<code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">memberId</code> 作为交易主体和资产归属主体，是更清楚、更少错的模型。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">七、总结</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">传统会员制交易所的第一版系统，不应该追求“大而全”的系统名词，而应该追求主链路清楚、资产归属清楚、清算依据清楚、流水可追溯。</p>
+
+  <blockquote style="margin:22px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#4d5965;font-size:15px;line-height:1.8;">用户账户管登录、角色和审计；会员账户管交易主体、资金、持仓和清算责任；订单承载交易意图；撮合生成成交事实；清算把成交变成资产变化；流水保证以后能查、能审、能对账。</blockquote>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">等业务复杂度真的上来，再拆更多账户、席位、清算路径和独立服务。早期先把模型做干净，比把系统拆得很细更重要。</p>
+
+</section>
+</body>
+</html>
