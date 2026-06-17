@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="交易所清算系统设计：用清算指令、策略模式、流水和余额快照收拢撮合、充值、提现、持仓调整等复杂业务。">
+<title>交易所清算系统设计：用指令、策略、流水和快照收拢复杂业务 · 李立川</title>
+</head>
+<body style="margin:0;background:#ffffff;">
+<nav style="max-width:760px;margin:0 auto;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;">
+  <a href="../index.html" style="color:#34618e;text-decoration:none;font-size:14px;">← 返回 李立川 · 首页</a>
+  <span style="color:#c0c7cf;margin:0 8px;">/</span>
+  <a href="./" style="color:#34618e;text-decoration:none;font-size:14px;">文章目录</a>
+</nav>
+
+<section style="max-width:760px;margin:0 auto;padding:20px 18px 64px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#ffffff;">
+
+  <p style="margin:0 0 10px;text-align:center;color:#7a8794;font-size:13px;letter-spacing:0.12em;">金融核心系统 · 清算架构 · DDD</p>
+  <h1 style="font-size:24px;font-weight:bold;color:#222222;text-align:center;line-height:1.5;margin:6px 0 28px;">交易所清算系统设计：用指令、策略、流水和快照收拢复杂业务</h1>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">清算系统最怕的不是业务多，而是每一种业务都把自己的状态、费用、落账方式塞进主流程。撮合成交、充值、提现、持仓调整看起来差异很大：撮合有买卖双方会员，充值和提现只有单边会员，持仓调整又只关心产品和数量。如果强行用一张大表统一所有字段，最后一定会变成大量空字段和大量 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">if else</code>。</p>
+
+  <blockquote style="margin:22px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#4d5965;font-size:15px;line-height:1.8;">更稳的做法是：统一状态，不统一业务字段。</blockquote>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">一、待清算表不要只是数据暂存池</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">很多系统一开始会做三张待清算表：撮合待清算、资金变动待清算、持仓变动待清算。这个方向本身没问题，因为不同业务字段确实不一样。但如果这些表里没有清算状态，批量清算就会很快失控。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">批量处理到一半失败怎么办？重复跑批会不会重复扣款？某条数据卡住了怎么定位？这批成功了多少、失败了多少、能不能重试？如果待清算表只是“待处理数据池”，这些问题都很难回答。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">所以我更倾向于把“待清算”升级成“清算指令”。保留业务明细表，但增加一张统一的 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">clearing_instruction</code> 表，专门承载调度状态。</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">clearing_instruction
+- instructionId
+- sourceType      // MATCH_TRADE / CASH_CHANGE / POSITION_CHANGE
+- sourceId        // 指向具体业务待清算明细
+- status          // PENDING / PROCESSING / CLEARED / FAILED
+- batchId
+- retryCount
+- errorCode
+- errorMessage
+- createdAt
+- clearedAt</pre>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">二、统一状态，不统一业务字段</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">清算指令表只放通用状态，不要把所有业务字段都塞进去。撮合待清算仍然可以有买方会员、卖方会员、产品、价格、数量；资金待清算只需要会员、币种、方向、金额；持仓待清算只需要会员、产品、方向、数量。</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">clearing_instruction
+  ├── MATCH_TRADE     -> match_clearing_pending
+  ├── CASH_CHANGE     -> cash_clearing_pending
+  └── POSITION_CHANGE -> position_clearing_pending</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">这是一种很实用的折中：统一的是状态、批次、幂等、重试和错误；分开的是业务字段。清算 worker 只扫 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">PENDING</code> 指令，按 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">sourceType</code> 加载对应明细，再进入统一流程。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">三、用策略模式隔离清算规则和费用规则</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">不同业务的清算逻辑不一样，费用规则也不一样。撮合成交要处理买卖双方，充值提现是单边资金变动，持仓调整可能根本不收费。这里最适合分两层策略：</p>
+
+  <ul style="margin:16px 0;padding-left:1.3em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">ClearingStrategy</strong>：回答“这类业务怎么生成资金/持仓应收应付”。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;"><strong style="color:#34618e;">FeeStrategy</strong>：回答“这类业务怎么计算手续费、税费、提现费”。</li>
+  </ul>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">ClearingWorker
+  ↓
+ClearingStrategyFactory.get(sourceType)
+  ↓
+ClearingStrategy.calculate(context)
+  ↓
+FeeStrategyFactory.get(context)
+  ↓
+businessLines + feeLines
+  ↓
+PostingService.post(result)</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">主流程不要关心撮合怎么扣、充值怎么加、提现怎么收费。它只负责调度、状态、幂等和落账。业务差异都藏在策略里。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">四、真正的归拢点是 clearing_line</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">不同业务可以有不同输入、不同策略，但输出要统一。统一输出不是一张万能输入表，而是一组标准清算明细。</p>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">clearing_line
+- clearingId
+- memberId
+- assetType      // CASH / POSITION
+- assetCode      // CNY / productId
+- direction      // IN / OUT / FREEZE_DEDUCT
+- amount/quantity
+- lineType       // TRADE_PAY / TRADE_RECEIVE / FEE / DEPOSIT
+- sourceSide     // BUY / SELL / NONE</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">撮合成交可以转成买方扣资金、买方增持仓、卖方扣持仓、卖方增资金、双方扣费用。充值可以转成会员资金增加。提现可以转成会员资金扣减和提现费。持仓调整可以转成持仓增加或扣减。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">只要都能变成 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">clearing_line</code>，后面的落账服务就可以统一。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">五、费用计算不要急着并行</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">如果用消息队列，业务发生后投递业务消息，清算系统生成指令，再由 worker 消费指令。这里很容易产生一个想法：业务清算和费用计算能不能两个消费者并行跑？</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">可以，但第一版通常不建议。因为费用往往依赖业务清算上下文：成交金额、产品类型、买卖方向、会员类型、市场、费率配置。费用不是一个完全独立的副作用，而是清算结果的一部分。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">同一条清算指令内，更稳的流程是顺序执行：</p>
+
+  <ol style="margin:16px 0;padding-left:1.4em;">
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">锁定清算指令。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">加载业务明细。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">执行业务清算策略，生成基础清算明细。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">执行费用策略，生成费用明细。</li>
+    <li style="margin:9px 0;font-size:15px;color:#3f3f3f;line-height:1.8;">合并明细，统一落账。</li>
+  </ol>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">如果未来费用计算确实很重，可以拆成并行子任务，但两个消费者都不能直接写最终流水。它们只能分别生成 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">business_clearing_line</code> 和 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">fee_clearing_line</code>，再由汇总落账器统一落账。否则状态、幂等、重试和对账都会变复杂。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">六、批次是调度单位，指令是事务单位</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">批量清算一定要有批次表，用来回答这一批清了多少条、成功多少、失败多少、耗时多久。但不要把整个批次放进一个大事务。批次是调度单位，不是事务单位。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">更合理的是：一条清算指令一个事务。事务内完成指令锁定、规则加载、清算明细、余额快照更新、资金/持仓流水、指令状态修改。某条失败，不会拖垮整批；重试也更容易做幂等。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">七、流水是事实，余额是实时投影</h2>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">清算完成后，是否可以只写流水，不更新余额和持仓表？日终用日初数据加当日流水重算日终数据，理论上是可以的。但这只适合最终交收或日终结算，不适合日中交易。</p>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">日中交易必须快速回答：会员现在还有多少可用资金？现在有多少可卖持仓？买单能不能冻结？卖单会不会超卖？如果每次都用日初余额加当日所有流水汇总，性能和并发控制都会很快出问题。</p>
+
+  <blockquote style="margin:22px 0;padding:14px 18px;background:#f5f8fb;border-left:4px solid #34618e;color:#4d5965;font-size:15px;line-height:1.8;">cash_ledger / position_ledger 是权威事实，解释为什么变；cash_balance / position_balance 是实时快照，回答现在是多少。</blockquote>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">日终时，再用日初数据 + 当日流水重算，生成日终资金和持仓，并与实时快照对账。一致，说明日中投影没有错；不一致，就进入差错处理。</p>
+
+  <h2 style="font-size:20px;font-weight:bold;color:#34618e;margin:38px 0 16px;padding-left:12px;border-left:4px solid #34618e;line-height:1.4;">八、最终模型</h2>
+
+  <pre style="margin:18px 0;background:#f6f8fa;border:1px solid #e1e4e8;border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#24292e;white-space:pre;">业务消息
+  ↓
+clearing_instruction
+  ↓
+sourceType -> 业务待清算明细
+  ↓
+ClearingStrategy + FeeStrategy
+  ↓
+clearing_record / clearing_line
+  ↓
+PostingService
+  ↓
+cash_ledger / position_ledger
+  ↓
+cash_balance / position_balance
+  ↓
+日终用流水重算校验</pre>
+
+  <p style="margin:16px 0;font-size:15px;color:#3f3f3f;line-height:1.9;letter-spacing:0.3px;">一句话总结：不同业务通过 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">sourceType</code> 和策略保持差异，通过 <code style="background:#eef1f4;padding:2px 6px;border-radius:4px;font-family:Menlo,Consolas,monospace;font-size:13px;color:#34618e;">clearing_line</code> 和统一落账服务完成归拢；流水是事实，余额和持仓是实时投影，日终结算用流水重算校验。</p>
+
+</section>
+</body>
+</html>

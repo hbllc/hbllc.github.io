@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="李立川的技术文章目录，收录金融核心系统、AI Agent、系统设计、工程实践等文章。">
+     <title>技术文章目录 · 李立川</title>
+     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../css/main.css">
+</head>
+<body id="top">
+     <header class="nav scrolled" id="nav">
+          <div class="nav__inner">
+               <a href="../index.html" class="nav__brand" aria-label="李立川 首页">
+                    李立川 <span>技术文章目录</span>
+               </a>
+               <nav class="nav__links" id="navLinks" aria-label="文章目录导航">
+                    <a href="#original" class="nav-link">本站原创</a>
+                    <a href="#external" class="nav-link">外部文章</a>
+                    <a href="../index.html#contact" class="nav-link">联系</a>
+               </nav>
+               <a href="../index.html" class="nav__cta">
+                    <i class="fas fa-arrow-left"></i> 返回主页
+               </a>
+               <button class="nav__burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="navLinks">
+                    <i class="fas fa-bars"></i>
+               </button>
+          </div>
+     </header>
+
+     <main>
+          <section class="hero">
+               <div class="container">
+                    <div class="hero__main" style="max-width: 760px;">
+                         <h1 class="hero__title">技术文章目录</h1>
+                         <p class="hero__role">Architecture Notes / AI Engineering / System Design</p>
+                         <p class="hero__value">把实战中的架构判断、系统边界和工程取舍，沉淀成可复用的文字。</p>
+                         <p class="hero__lead">首页只保留精选文章，这里集中存放完整目录，后续新增文章也优先归档到这里。</p>
+                    </div>
+               </div>
+          </section>
+
+          <section class="section" id="original">
+               <div class="container">
+                    <div class="section-head">
+                         <span class="section-index">01</span>
+                         <h2 class="section-title">本站原创</h2>
+                         <span class="section-note">适合直接阅读与转发</span>
+                    </div>
+
+                    <div class="writing-list">
+                         <a class="article-card article-card--feature reveal" href="exchange-clearing-system.html">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--live">金融核心</span>
+                                   <span class="article-card__src">交易所 · 清算架构</span>
+                              </div>
+                              <h3 class="article-card__title">交易所清算系统设计：用指令、策略、流水和快照收拢复杂业务</h3>
+                              <p class="article-card__excerpt">会员制交易所清算系统的最小稳定模型：清算指令、批量状态、策略模式、统一明细、流水与余额快照。</p>
+                              <span class="article-card__more">阅读全文 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="aiws-architecture.html">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--live">AI Agent</span>
+                                   <span class="article-card__src">多智能体 · 组织协作</span>
+                              </div>
+                              <h3 class="article-card__title">把多智能体协作做进组织工作流：架构与取舍</h3>
+                              <p class="article-card__excerpt">多数 AI Agent 落地，最后都长成一个独立聊天框。这篇讨论多智能体协作如何嵌入组织工作流。</p>
+                              <span class="article-card__more">阅读全文 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="build-personal-site.html">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--live">工程实践</span>
+                                   <span class="article-card__src">静态站 · GitHub Pages</span>
+                              </div>
+                              <h3 class="article-card__title">从零手写一个「不像模板」的个人主页，并白嫖 GitHub Pages 上线</h3>
+                              <p class="article-card__excerpt">不用框架、不用模板，三个文件做出这个站：设计系统、信息架构、渐进增强动效，到 GitHub Pages 上线。</p>
+                              <span class="article-card__more">阅读全文 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="build-site-with-ai.html">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--live">AI 协作</span>
+                                   <span class="article-card__src">工作流 · 复盘</span>
+                              </div>
+                              <h3 class="article-card__title">我用两个 AI 做出了这个网站：一个管设计、一个管实现，让它们互相评审</h3>
+                              <p class="article-card__excerpt">GenSpark 出设计与评审、Claude Code 落地代码，再让两个 AI 循环评审网站内容、结构与审美。</p>
+                              <span class="article-card__more">阅读全文 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="read-financial-statements.html">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--live">方法论</span>
+                                   <span class="article-card__src">财报 · 估值方法论</span>
+                              </div>
+                              <h3 class="article-card__title">读懂一家公司：先看健不健康，再看值不值得买</h3>
+                              <p class="article-card__excerpt">两根轴看懂一家公司：用「四诊 + 趋势 + 看穿术」判断健不健康，再用 PE / PEG / PB / DCF 判断贵不贵。</p>
+                              <span class="article-card__more">阅读全文 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+                    </div>
+               </div>
+          </section>
+
+          <section class="section" id="external">
+               <div class="container">
+                    <div class="section-head">
+                         <span class="section-index">02</span>
+                         <h2 class="section-title">外部文章</h2>
+                         <span class="section-note">CSDN 旧文与方法论</span>
+                    </div>
+
+                    <div class="writing-list">
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/153395132" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">AI Agent</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">AI 多 agent 协作范式思考</h3>
+                              <p class="article-card__excerpt">多 Agent 协作，本质是路由分支、依赖等待、结果合并这些经典计算范式，在 AI 能力下的智能化演进。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/156935825" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">系统设计</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">短信系统设计 · 防盗刷</h3>
+                              <p class="article-card__excerpt">短信接口防盗刷的多层纵深防御：人机验证、多维限流、动态签名，加风控与自动熔断。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/155106970" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">消息中间件</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">RabbitMQ 和 Kafka 选型</h3>
+                              <p class="article-card__excerpt">一句话拍板：消息通信选 RabbitMQ，海量数据流处理选 Kafka，背后是两者定位的根本差异。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="article-card reveal" href="https://blog.csdn.net/weixin_42632514/article/details/153958707" target="_blank" rel="noopener">
+                              <div class="article-card__meta">
+                                   <span class="chip chip--role">架构体系</span>
+                                   <span class="article-card__src">CSDN</span>
+                              </div>
+                              <h3 class="article-card__title">Java 中间件全景回顾</h3>
+                              <p class="article-card__excerpt">分布式系统中间件技术体系全景：接入、服务、数据、熔断降级、运维各层的选型与价值。</p>
+                              <span class="article-card__more">在 CSDN 阅读 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                         </a>
+
+                         <a class="writing-all reveal" href="https://blog.csdn.net/weixin_42632514" target="_blank" rel="noopener">
+                              在 CSDN 查看全部文章 <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                         </a>
+                    </div>
+               </div>
+          </section>
+     </main>
+
+     <footer class="footer">
+          <div class="footer__inner">
+               <div class="footer__brand">
+                    <span class="footer__name">李立川</span>
+                    <span class="footer__role">金融科技架构师 / AI Engineer</span>
+               </div>
+               <nav class="footer__links" aria-label="页脚导航">
+                    <a href="../index.html#projects">代表项目</a>
+                    <a href="../index.html#experience">经历</a>
+                    <a href="../index.html#skills">技能</a>
+                    <a href="../index.html#contact">联系</a>
+               </nav>
+          </div>
+          <div class="footer__bottom">
+               <span>© 2026 李立川 · All rights reserved.</span>
+               <a href="#top" class="footer__top-link">回到顶部 <i class="fas fa-arrow-up"></i></a>
+          </div>
+     </footer>
+
+     <script src="../js/main.js"></script>
+</body>
+</html>
