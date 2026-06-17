@@ -2322,6 +2322,36 @@ img {
 /* ============================================================
    技术文章 — 整卡可点，hover 抬升，与项目/战绩卡同一套语言
    ============================================================ */
+.articles-hero {
+     padding: 128px 0 72px;
+}
+
+.articles-hero .container {
+     max-width: 820px;
+}
+
+.articles-hero__main {
+     max-width: 560px;
+}
+
+.articles-hero .hero__title {
+     font-size: clamp(2.25rem, 4.8vw, 3.1rem);
+}
+
+.articles-hero .hero__role {
+     max-width: 540px;
+}
+
+.articles-hero .hero__value {
+     max-width: 18em;
+     font-size: clamp(1.45rem, 3.2vw, 1.9rem);
+     line-height: 1.55;
+}
+
+.articles-hero .hero__lead {
+     max-width: 34em;
+}
+
 .writing-list {
      display: grid;
      grid-template-columns: 1fr 1fr;
@@ -2423,6 +2453,22 @@ img {
 }
 
 @media (max-width: 760px) {
+     .articles-hero {
+          padding: 112px 0 56px;
+     }
+
+     .articles-hero__main {
+          max-width: none;
+     }
+
+     .articles-hero .hero__title {
+          font-size: clamp(2.15rem, 11vw, 3rem);
+     }
+
+     .articles-hero .hero__value {
+          max-width: 12em;
+     }
+
      .writing-list {
           grid-template-columns: 1fr;
      }
