@@ -2323,33 +2323,42 @@ img {
    技术文章 — 整卡可点，hover 抬升，与项目/战绩卡同一套语言
    ============================================================ */
 .articles-hero {
-     padding: 128px 0 72px;
+     padding: 120px 0 56px;
 }
 
 .articles-hero .container {
-     max-width: 820px;
+     max-width: 860px;
 }
 
 .articles-hero__main {
-     max-width: 560px;
+     display: grid;
+     grid-template-columns: minmax(220px, 0.9fr) minmax(320px, 1.1fr);
+     gap: 42px;
+     align-items: center;
+     max-width: 760px;
 }
 
 .articles-hero .hero__title {
-     font-size: clamp(2.25rem, 4.8vw, 3.1rem);
+     font-size: clamp(1.9rem, 3.4vw, 2.55rem);
+     line-height: 1.15;
+}
+
+.articles-hero__copy {
+     min-width: 0;
 }
 
 .articles-hero .hero__role {
-     max-width: 540px;
+     margin: 0;
+     max-width: none;
+     font-size: 0.92rem;
+     line-height: 1.7;
 }
 
 .articles-hero .hero__value {
-     max-width: 18em;
-     font-size: clamp(1.45rem, 3.2vw, 1.9rem);
-     line-height: 1.55;
-}
-
-.articles-hero .hero__lead {
-     max-width: 34em;
+     margin-top: 14px;
+     max-width: 24em;
+     font-size: clamp(1.05rem, 2vw, 1.28rem);
+     line-height: 1.65;
 }
 
 .writing-list {
@@ -2454,19 +2463,21 @@ img {
 
 @media (max-width: 760px) {
      .articles-hero {
-          padding: 112px 0 56px;
+          padding: 104px 0 48px;
      }
 
      .articles-hero__main {
+          display: block;
           max-width: none;
      }
 
      .articles-hero .hero__title {
-          font-size: clamp(2.15rem, 11vw, 3rem);
+          font-size: clamp(1.95rem, 9vw, 2.6rem);
      }
 
      .articles-hero .hero__value {
-          max-width: 12em;
+          max-width: none;
+          font-size: 1.08rem;
      }
 
      .writing-list {
