@@ -43,7 +43,15 @@
      /* ---- 导航滚动高亮（scroll spy）---- */
      const navAnchors = $$('.nav-link');
      const targets = navAnchors
-          .map(a => $(a.getAttribute('href')))
+          .map(a => {
+               const href = a.getAttribute('href') || '';
+               if (!href.startsWith('#')) return null;
+               try {
+                    return $(href);
+               } catch (_err) {
+                    return null;
+               }
+          })
           .filter(Boolean);
 
      if (targets.length) {
