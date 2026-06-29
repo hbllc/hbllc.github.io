@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAG 的存储与检索：从原理到落地思考</title>
+<style>
+  :root{
+    --ink:#1a1d24; --sub:#5b6472; --line:#e6e8ee; --bg:#fbfcfe;
+    --brand:#2f6df6; --brand-soft:#eaf1ff;
+    --warm:#f6a623; --warm-soft:#fff6e6;
+    --green:#1faa6e; --green-soft:#e7f7ef;
+    --red:#e25555; --red-soft:#fdecec;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    line-height:1.85; font-size:16.5px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:48px 22px 100px}
+  h1{font-size:37px; line-height:1.28; margin:0 0 14px; letter-spacing:-.5px; font-weight:800}
+  h2{font-size:27px; margin:58px 0 8px; letter-spacing:-.3px; font-weight:700; display:flex; align-items:baseline; gap:11px}
+  h2 .n{font-size:15px; color:var(--brand); font-weight:700; background:var(--brand-soft); border-radius:8px; padding:3px 11px; flex:none}
+  h3{font-size:19px; margin:32px 0 8px; font-weight:700}
+  p{margin:12px 0}
+  strong{color:#10131a}
+  .lead{font-size:17.5px; font-weight:600; color:#10131a; background:linear-gradient(transparent 62%,#fff2c8 62%); display:inline}
+  em{font-style:normal; color:var(--brand); font-weight:600}
+  .part{margin:64px 0 0; border-top:2px solid var(--ink); padding-top:10px}
+  .part .tag{font-size:13px; letter-spacing:2px; color:var(--sub); font-weight:700}
+  .part h2{margin-top:6px; border:0}
+  /* lead + guide */
+  .thesis{font-size:18.5px; line-height:1.72; font-weight:600; color:#10131a; background:var(--brand-soft); border-left:4px solid var(--brand); border-radius:0 12px 12px 0; padding:16px 20px; margin:4px 0 20px}
+  .thesis b{color:var(--brand)}
+  .guide{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:0 0 34px}
+  .guide .gi{font-size:14px; color:var(--sub); line-height:1.6; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:13px 16px}
+  .guide .gi span{display:block; font-size:12.5px; font-weight:700; color:var(--ink); margin-bottom:4px; letter-spacing:.3px}
+  /* callouts */
+  .note{background:var(--brand-soft); border-left:4px solid var(--brand); border-radius:0 10px 10px 0; padding:12px 16px; margin:18px 0; font-size:15px}
+  .note.warm{background:var(--warm-soft); border-color:var(--warm)}
+  .pull{font-size:18px; font-weight:600; color:#10131a; border-left:4px solid var(--warm); padding:6px 0 6px 16px; margin:22px 0}
+  /* three lines */
+  .triplet{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:18px 0}
+  .triplet .b{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px}
+  .triplet .b h4{margin:0 0 4px; font-size:15px}
+  .triplet .b.up h4{color:var(--brand)} .triplet .b.mid h4{color:var(--warm)} .triplet .b.dn h4{color:var(--green)}
+  .triplet .b p{margin:0; font-size:13.5px; color:var(--sub); line-height:1.6}
+  /* media cards */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0}
+  .mc{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 16px 14px; position:relative}
+  .mc h4{margin:0 0 2px; font-size:15.5px}
+  .mc .en{font-size:12px; color:var(--sub); font-weight:400}
+  .mc dl{margin:10px 0 0; font-size:13.5px; line-height:1.55}
+  .mc dt{color:var(--sub); float:left; width:64px; clear:left; font-size:12px; padding-top:1px}
+  .mc dd{margin:0 0 5px 70px}
+  .mc .cost{margin-top:10px; display:flex; gap:6px; flex-wrap:wrap}
+  .pill{font-size:11.5px; padding:2px 9px; border-radius:20px; font-weight:600}
+  .pill.c-lo{background:var(--green-soft); color:#0e7a4d}
+  .pill.c-md{background:var(--warm-soft); color:#a96b00}
+  .pill.c-hi{background:var(--red-soft); color:#bb2d2d}
+  /* tables */
+  table{width:100%; border-collapse:collapse; margin:18px 0; font-size:14px}
+  th,td{text-align:left; padding:9px 11px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{background:#f3f5fa; font-size:12.5px; color:var(--sub); font-weight:700; letter-spacing:.3px}
+  tr:hover td{background:#fafbfe}
+  .lv{font-weight:700}.lv.lo{color:var(--green)}.lv.md{color:var(--warm)}.lv.hi{color:var(--red)}
+  /* funnel */
+  .funnel{margin:20px auto; max-width:520px}
+  .fl{margin:0 auto 8px; color:#fff; border-radius:10px; padding:13px 16px; text-align:center; font-weight:600; font-size:14.5px}
+  .fl small{display:block; font-weight:400; font-size:12.5px; opacity:.9; margin-top:2px}
+  .f1{background:#8b95a7; width:100%}
+  .f2{background:#5a78c4; width:80%}
+  .f3{background:var(--brand); width:58%}
+  .farrow{text-align:center; color:var(--sub); font-size:18px; margin:-2px 0 6px}
+  /* cascade */
+  .casc{display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:center; gap:8px; margin:20px 0; text-align:center}
+  .casc .step{border-radius:12px; padding:14px 10px; font-size:14px; font-weight:600}
+  .casc .s1{background:var(--warm-soft); border:1px solid #f0d49a}
+  .casc .s2{background:var(--brand-soft); border:1px solid #c5d8ff}
+  .casc .s3{background:var(--green-soft); border:1px solid #b6e6cf}
+  .casc .step small{display:block; font-weight:400; color:var(--sub); font-size:12px; margin-top:3px}
+  .casc .ar{color:var(--sub); font-size:20px; font-weight:700}
+  /* questions */
+  .q{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin:14px 0}
+  .q h4{margin:0 0 6px; font-size:16px; display:flex; gap:9px; align-items:baseline}
+  .q h4 .qn{flex:none; width:24px; height:24px; line-height:24px; text-align:center; background:var(--ink); color:#fff; border-radius:50%; font-size:13px; font-weight:700}
+  .q .why{margin:8px 0 0; font-size:14px; color:var(--sub)}
+  .q .why b{color:var(--brand)}
+  /* svg wrap */
+  figure{margin:22px 0; text-align:center}
+  figcaption{font-size:12.5px; color:var(--sub); margin-top:8px}
+  .end{margin-top:50px; background:var(--brand-soft); border:1px solid #c5d8ff; border-left:4px solid var(--brand); border-radius:0 14px 14px 0; padding:22px 24px; font-size:16.5px; line-height:1.78; font-weight:600; color:#10131a}
+  .end b{color:var(--brand)}
+  @media(max-width:620px){
+    .grid,.triplet,.guide{grid-template-columns:1fr}
+    .casc{grid-template-columns:1fr; }
+    .casc .ar{transform:rotate(90deg)}
+    .mc dt{width:56px}.mc dd{margin-left:62px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>RAG 的存储与检索：从原理到落地思考</h1>
+
+  <p class="thesis">做 RAG，决定成败的不是用哪个大模型，而是能否从自己的数据里<b>检索</b>到对的内容——而高质量的检索，靠的从来不是单一向量数据库，是<b>按问题需求组合多种存储与检索方式</b>。</p>
+
+  <div class="guide">
+    <div class="gi"><span>上半篇 · 通用原理</span>存储介质与检索方法的全景：有哪些选择、各适合什么。</div>
+    <div class="gi"><span>下半篇 · 落地思考</span>面对大规模文档，动手前要先想清楚的几个问题。</div>
+  </div>
+
+  <!-- ===================== PART 1 ===================== -->
+  <div class="part">
+    <div class="tag">第一部分 · 通用篇</div>
+    <h2><span class="n">1</span>这套东西到底在解什么</h2>
+  </div>
+
+  <p>RAG 是 Retrieval-Augmented Generation，中文叫<em>检索增强生成</em>。说人话：大模型回答你之前，先去你自己的资料库里<strong>查</strong>出相关内容，拿着这些内容再作答。这样它就不靠"背书"硬答，也少编瞎话。</p>
+
+  <p>圈子里有句流行话——「RAG 成败在检索」。作为抓重点它没错，但照搬会误导。更准的说法是三句：</p>
+
+  <div class="triplet">
+    <div class="b up"><h4>预处理 定上限</h4><p>一段内容能不能被查到，在它入库那一刻就定死了。处理时漏掉的，后面再花哨的检索也捞不回来。</p></div>
+    <div class="b mid"><h4>检索 定兑现率</h4><p>这个上限能兑现多少，靠存储和检索方法的组合。工程杠杆最大、最容易翻车的就是这一段。</p></div>
+    <div class="b dn"><h4>生成 定下限</h4><p>同样的料，拼装和约束差也能答崩。但它的边际收益最低，不是主战场。</p></div>
+  </div>
+
+  <p class="pull">「成败在检索」真正的意思是「成败在<strong>检索质量</strong>」——它由上游处理和下游检索共同决定，检索是最集中的爆发点，不是唯一责任人。</p>
+
+  <!-- 2 -->
+  <h2><span class="n">2</span>检索 ≠ 查向量库</h2>
+
+  <p>大多数人一听"RAG 检索"，脑子里就是"查向量数据库"。这是个误解，而且是后面所有判断的地基。</p>
+
+  <p><strong>检索，是从存储里定位并取出和问题相关的数据——跟用什么介质无关。</strong>向量检索只是其中一种，它只解决"语义相似"这一种需求而已。</p>
+
+  <p>举个具体的查询就明白了。假设你要查：<em>「2023 年华东区违约的那批合同」</em>——</p>
+
+  <figure>
+  <svg viewBox="0 0 760 250" width="100%" style="max-width:720px" font-family="inherit">
+    <rect x="250" y="14" width="260" height="44" rx="10" fill="#10131a"/>
+    <text x="380" y="41" fill="#fff" font-size="15" font-weight="600" text-anchor="middle">查：2023年华东区违约的合同</text>
+    <!-- lines -->
+    <g stroke="#cfd6e4" stroke-width="2" fill="none">
+      <path d="M315,58 C260,90 175,100 130,124"/>
+      <path d="M355,58 C330,95 305,100 295,124"/>
+      <path d="M405,58 C430,95 455,100 465,124"/>
+      <path d="M445,58 C520,90 600,100 632,124"/>
+    </g>
+    <!-- nodes -->
+    <g font-size="12.5" text-anchor="middle">
+      <rect x="48" y="124" width="164" height="58" rx="10" fill="#eaf1ff" stroke="#c5d8ff"/>
+      <text x="130" y="146" font-weight="700" fill="#2f6df6">"违约" → 语义</text>
+      <text x="130" y="166" fill="#5b6472">向量检索</text>
+      <rect x="226" y="124" width="138" height="58" rx="10" fill="#fff6e6" stroke="#f0d49a"/>
+      <text x="295" y="146" font-weight="700" fill="#a96b00">"2023" → 范围</text>
+      <text x="295" y="166" fill="#5b6472">结构化过滤</text>
+      <rect x="378" y="124" width="138" height="58" rx="10" fill="#fff6e6" stroke="#f0d49a"/>
+      <text x="447" y="146" font-weight="700" fill="#a96b00">"华东区" → 过滤</text>
+      <text x="447" y="166" fill="#5b6472">结构化过滤</text>
+      <rect x="548" y="124" width="168" height="58" rx="10" fill="#e7f7ef" stroke="#b6e6cf"/>
+      <text x="632" y="146" font-weight="700" fill="#0e7a4d">合同编号 → 精确</text>
+      <text x="632" y="166" fill="#5b6472">关键词 / 精确匹配</text>
+    </g>
+    <text x="380" y="222" font-size="13.5" fill="#1a1d24" text-anchor="middle" font-weight="600">一个问题，四种检索，落在不同介质上。</text>
+  </svg>
+  <figcaption>同一个查询被拆成多种"匹配需求"，每种需求对应一种检索方式</figcaption>
+  </figure>
+
+  <p>SQL 查关系库、BM25 查倒排、按 key 取缓存、图遍历查关系——<strong>这些全都是检索</strong>。向量只负责其中"语义模糊"那一路。</p>
+
+  <!-- 3 -->
+  <h2><span class="n">3</span>为什么不能只用一种</h2>
+
+  <p>很多人会说，组合多种存储和检索是为了"高质量、高性能、高性价比"。这是<strong>表层目标</strong>。底层原因只有一句：</p>
+
+  <p class="pull">问题的"匹配需求"本身就是多样的，没有任何单一方式能全覆盖。</p>
+
+  <p>语义模糊要向量，专有名词和编号要关键词，权限和时间要结构化过滤，多跳关系要图。需求不同，方法就不同，落的介质也不同。所谓的"三高三角"，不过是这个事实在工程上的投影——你想同时把质量做高、延迟压低、成本控住，单一方案做不到，只能分工组合。</p>
+
+  <figure>
+  <svg viewBox="0 0 420 230" width="100%" style="max-width:380px" font-family="inherit">
+    <polygon points="210,28 372,200 48,200" fill="none" stroke="#cfd6e4" stroke-width="2"/>
+    <circle cx="210" cy="28" r="6" fill="#2f6df6"/><text x="210" y="18" text-anchor="middle" font-size="14" font-weight="700" fill="#2f6df6">高质量</text>
+    <circle cx="372" cy="200" r="6" fill="#f6a623"/><text x="372" y="222" text-anchor="middle" font-size="14" font-weight="700" fill="#a96b00">高性能</text>
+    <circle cx="48" cy="200" r="6" fill="#1faa6e"/><text x="48" y="222" text-anchor="middle" font-size="14" font-weight="700" fill="#0e7a4d">高性价比</text>
+    <text x="210" y="140" text-anchor="middle" font-size="13" fill="#5b6472">互相拉扯</text>
+    <text x="210" y="160" text-anchor="middle" font-size="12" fill="#8b95a7">单一方案只能占一两个角</text>
+  </svg>
+  <figcaption>质量 / 性能 / 性价比往往互相牵制，组合才能兼顾</figcaption>
+  </figure>
+
+  <!-- 4 -->
+  <h2><span class="n">4</span>有哪些存储介质</h2>
+  <p>每种介质天生适合存某一类数据、配某一种检索。下面每张卡片按同一套看：<strong>存什么 · 怎么处理 · 怎么检索 · 成本与复杂度</strong>。成本指存储+算力的量级，复杂度指工程+运维。</p>
+
+  <div class="grid">
+    <div class="mc">
+      <h4>对象存储 <span class="en">S3 / MinIO / OSS</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>几十 T 原始文件、扫描件、归档原件</dd>
+        <dt>怎么处理</dt><dd>几乎不处理，原样落盘</dd>
+        <dt>怎么检索</dt><dd>按路径/ID 取整个文件</dd>
+      </dl>
+      <div class="cost"><span class="pill c-lo">成本 极低 ≈几毛/GB/月</span><span class="pill c-lo">复杂度 低</span></div>
+    </div>
+    <div class="mc">
+      <h4>向量库 <span class="en">Milvus / Qdrant</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>文本切块的 embedding 向量</dd>
+        <dt>怎么处理</dt><dd>解析 → 切分 → 向量化</dd>
+        <dt>怎么检索</dt><dd>近似最近邻搜索，语义相似</dd>
+      </dl>
+      <div class="cost"><span class="pill c-md">成本 中–高（吃内存）</span><span class="pill c-md">复杂度 中–高</span></div>
+    </div>
+    <div class="mc">
+      <h4>倒排 / 全文引擎 <span class="en">Elasticsearch</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>文本词项（关键词、专名、编号）</dd>
+        <dt>怎么处理</dt><dd>解析 → 分词 → 建倒排索引</dd>
+        <dt>怎么检索</dt><dd>BM25 关键词匹配</dd>
+      </dl>
+      <div class="cost"><span class="pill c-md">成本 中</span><span class="pill c-md">复杂度 中</span></div>
+    </div>
+    <div class="mc">
+      <h4>关系库 <span class="en">MySQL / PostgreSQL</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>结构化元数据：来源/时间/权限/编号</dd>
+        <dt>怎么处理</dt><dd>抽取字段、建表</dd>
+        <dt>怎么检索</dt><dd>SQL 精确 / 范围 / 过滤</dd>
+      </dl>
+      <div class="cost"><span class="pill c-lo">成本 低</span><span class="pill c-lo">复杂度 低</span></div>
+    </div>
+    <div class="mc">
+      <h4>关系库 + 向量扩展 <span class="en">pgvector</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>向量 + 结构化字段同库（量不大时）</dd>
+        <dt>怎么处理</dt><dd>向量化 + 建表，一处搞定</dd>
+        <dt>怎么检索</dt><dd>SQL 与向量混在一起查</dd>
+      </dl>
+      <div class="cost"><span class="pill c-lo">成本 低–中</span><span class="pill c-lo">复杂度 低（复用现有 PG）</span></div>
+    </div>
+    <div class="mc">
+      <h4>文档库 / KV <span class="en">MongoDB / Redis</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>半结构化原文、按 id 直取的片段</dd>
+        <dt>怎么处理</dt><dd>按 id / 字段组织</dd>
+        <dt>怎么检索</dt><dd>key 直取，命中即返</dd>
+      </dl>
+      <div class="cost"><span class="pill c-lo">成本 低</span><span class="pill c-lo">复杂度 低</span></div>
+    </div>
+    <div class="mc">
+      <h4>图库 <span class="en">Neo4j / NebulaGraph</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>实体与关系（谁牵涉谁、A 引用 B）</dd>
+        <dt>怎么处理</dt><dd>实体关系抽取，建三元组</dd>
+        <dt>怎么检索</dt><dd>图遍历，多跳推理</dd>
+      </dl>
+      <div class="cost"><span class="pill c-hi">成本 高</span><span class="pill c-hi">复杂度 高</span></div>
+    </div>
+    <div class="mc">
+      <h4>缓存层 <span class="en">Redis / 内存</span></h4>
+      <dl>
+        <dt>存什么</dt><dd>热点查询结果、算好的 embedding</dd>
+        <dt>怎么处理</dt><dd>命中一次就缓存下来</dd>
+        <dt>怎么检索</dt><dd>key 直取，毫秒级</dd>
+      </dl>
+      <div class="cost"><span class="pill c-md">成本 中（内存）</span><span class="pill c-lo">复杂度 低</span></div>
+    </div>
+  </div>
+
+  <div class="note">这张表能反过来用：<strong>数据处理产出什么形态的"单元"（向量 / 词项 / 结构化字段 / 图三元组），就决定它落哪种介质、配哪种检索。</strong>同一段文字可以同时做成向量、进倒排、抽出字段——一份料，多路检索。</div>
+
+  <!-- 5 -->
+  <h2><span class="n">5</span>有哪些检索方法</h2>
+  <p>别按"向量 / 非向量"分，按<strong>"它解决哪种需求"</strong>分，分四类来看：召回、检索前增强、检索后处理、检索策略。</p>
+
+  <h3>① 召回层：第一步把候选捞上来</h3>
+  <table>
+    <tr><th>方法</th><th>解决什么需求</th><th>成本</th><th>复杂度</th></tr>
+    <tr><td>稠密向量（ANN）</td><td>语义相似、模糊问法</td><td class="lv md">中</td><td class="lv md">中</td></tr>
+    <tr><td>稀疏 / BM25</td><td>关键词、专有名词、编号</td><td class="lv lo">低</td><td class="lv lo">低</td></tr>
+    <tr><td>混合检索（hybrid + 融合）</td><td><strong>通用首选</strong>，语义+关键词互补</td><td class="lv md">中</td><td class="lv md">中</td></tr>
+    <tr><td>元数据过滤</td><td>权限、时间、来源、类型约束</td><td class="lv lo">低</td><td class="lv lo">低</td></tr>
+    <tr><td>精确匹配（SQL / 正则）</td><td>ID、编号、精确查</td><td class="lv lo">低</td><td class="lv lo">低</td></tr>
+    <tr><td>多向量后期交互（ColBERT）</td><td>高精度，但存储算力都贵</td><td class="lv hi">高</td><td class="lv hi">高</td></tr>
+  </table>
+
+  <h3>② 检索前增强：先把"问题"问对</h3>
+  <p>用户的问法常常很糙。<strong>查询改写</strong>（换种说法）、<strong>子问题分解</strong>（复杂问拆成几小问）、<strong>HyDE</strong>（先让模型脑补一段"理想答案"再拿去检索）、<strong>语义路由</strong>（先判断这个问题该走哪个库）——都是在检索发生<em>之前</em>提升命中率。代价是多打几次大模型。</p>
+
+  <h3>③ 检索后处理：把捞上来的料筛精</h3>
+  <p><strong>重排（rerank）</strong>是这一类里性价比最高的一招——召回先粗捞几十条，再用一个更精的模型重新排序，质量提升明显、改造成本低。另外还有<strong>上下文压缩</strong>（裁掉无关句省 token）、<strong>父子检索</strong>（小块负责精准命中，命中后返回它所在的大块给足上下文）。</p>
+
+  <h3>④ 检索策略：编排多路</h3>
+  <p><strong>多路召回 + 融合</strong>（几路一起捞再合并）、<strong>GraphRAG</strong>（走图做多跳）、<strong>RAPTOR</strong>（给长文档建摘要树看全局）、<strong>自适应检索</strong>（按需多轮反复检索）。这些威力大，但成本和复杂度普遍偏<span class="lv hi">高</span>，属于"有明确需求才上"。</p>
+
+  <div class="note warm"><strong>选型心法：</strong>绝大多数场景的高性价比起点是 <em>混合检索 + 元数据过滤 + rerank</em>。专有名词靠 BM25、模糊问法靠向量、权限来源靠过滤、最后 rerank 精排。图检索 / RAPTOR / ColBERT 这类高代价方法，<strong>等出现了对应的明确需求再加</strong>——每多一种，都在给系统加运维负担。</p></div>
+
+  <!-- ===================== PART 2 ===================== -->
+  <div class="part">
+    <div class="tag">第二部分 · 思考篇</div>
+    <h2><span class="n">6</span>大规模数据，为什么必须先"收敛"</h2>
+  </div>
+
+  <p>前面是工具箱。但真到落地，尤其当你手里是<strong>大体量的非结构化文档</strong>（动辄几十 T 的 PDF、Word、图片），第一件要想清的事不是"用哪个库"，而是：<em>这几十 T，到底要往库里塞多少？</em></p>
+
+  <p>答案通常是：<strong>不全塞。</strong>原始数据是矿石，检索库里要的是提炼出的金属。几十 T 的原料，最终入库的可能只有几 G——中间是一个漏斗。</p>
+
+  <div class="funnel">
+    <div class="fl f1">几十 T · 原始文件<small>PDF / Word / 图片，含大量冗余、噪声、格式开销</small></div>
+    <div class="farrow">▼ 解析提取正文 · OCR · 去重去噪</div>
+    <div class="fl f2">几十 G · 纯文本 + 结构 + 元数据<small>原件归档进对象存储冷存，留作可追溯</small></div>
+    <div class="farrow">▼ 切分 · 向量化 · 只留检索需要的</div>
+    <div class="fl f3">几 G · 可检索单元<small>这才是在线库里真正存的精华</small></div>
+  </div>
+
+  <p>体积为什么能掉两三个数量级？四个来源：<strong>格式开销</strong>（PDF/图片体积大、里面纯文字很小）、<strong>去重</strong>（多版本、重复段落）、<strong>去噪</strong>（页眉页脚、水印、空白页）、<strong>只存检索所需</strong>（原件冷存，在线只放向量+元数据）。</p>
+
+  <h3>谁来干这个漏斗：人和机器的分工</h3>
+  <p>当人力不是瓶颈、但<strong>时效是硬约束</strong>时，合理的编排是一条三段级联——前段铺便宜人力把脏活粗活干掉，中段用技术扛主体量保速度，后段用专家把质量关：</p>
+
+  <div class="casc">
+    <div class="step s1">人工初筛<small>粗筛、粗分类、明显去噪（可技术辅助提速）</small></div>
+    <div class="ar">→</div>
+    <div class="step s2">技术处理<small>解析、OCR、去重、切分、向量化，自动化扛量</small></div>
+    <div class="ar">→</div>
+    <div class="step s3">人工质检<small>抽检、难例校对，卡住质量上限</small></div>
+  </div>
+
+  <p class="pull">不是"数据越多越好"，是"精华越纯越好"。漏斗的本事，是把对的东西留下、把噪声丢掉。</p>
+
+  <!-- 7 -->
+  <h2><span class="n">7</span>动手前，先想清楚这 6 个问题</h2>
+  <p>下面这些没有标准答案——答案取决于<strong>你的</strong>数据和场景。但每一个都会反过来决定你在第一部分该挑哪种介质、哪种方法。先把它们想清楚，再写第一行代码。</p>
+
+  <div class="q">
+    <h4><span class="qn">1</span>你的数据，到底有哪几类、各占多少？</h4>
+    <p class="why"><b>为什么关键：</b>PDF、Word、图片之外，盘点时还要核对有没有 Excel、PPT、邮件、网页、音视频、聊天记录。其中<strong>扫描件和图片的占比，直接决定你要不要上 OCR、投入多大</strong>——而 OCR 的质量会锁死后面所有检索的上限。</p>
+  </div>
+  <div class="q">
+    <h4><span class="qn">2</span>你真实的查询，长什么样？</h4>
+    <p class="why"><b>为什么关键：</b>是语义模糊地问、精确查编号术语、还是带权限时间过滤？<strong>这条最该先想清，因为它倒推你该配哪些介质和方法。</strong>查询都是关键词精确查，却上了一堆向量基建，就是钱花错地方。</p>
+  </div>
+  <div class="q">
+    <h4><span class="qn">3</span>什么数据算"精华"，该被留下？</h4>
+    <p class="why"><b>为什么关键：</b>漏斗压掉什么、留下什么，全看这条标准。留太多——成本和噪声都上去、召回反而变差；留太少——该有的答案漏召回。<strong>这是一道纯数据视角的题：什么内容有检索价值。</strong></p>
+  </div>
+  <div class="q">
+    <h4><span class="qn">4</span>人工初筛 / 技术处理 / 人工质检，怎么配比？时效要多久？</h4>
+    <p class="why"><b>为什么关键：</b>三段的比例决定了"速度与质量"的平衡点。哪些环节靠技术全自动、哪些必须留人把关、整条管道要多久跑完一轮——这是工程节奏的总开关。</p>
+  </div>
+  <div class="q">
+    <h4><span class="qn">5</span>OCR / 多模态，到什么程度才值得上？</h4>
+    <p class="why"><b>为什么关键：</b>扫描件和图片占比多大，才值得为 OCR 付出成本？图表里的信息是用 OCR 转文字够用，还是非得上多模态理解？<strong>质量门槛设在哪</strong>——这几个问题没答案，预算就没法估。</p>
+  </div>
+  <div class="q">
+    <h4><span class="qn">6</span>你怎么知道检索"做得好不好"？</h4>
+    <p class="why"><b>为什么关键：</b>这条最容易被忽略，却最致命。<strong>没有评估，就没法迭代</strong>——你改了切分、换了模型，是变好还是变坏，全凭感觉。先想好用什么指标、什么样本来量它，系统才能越跑越准。</p>
+  </div>
+
+  <!-- END -->
+  <div class="end">
+    一句话收尾：做 RAG，成败在<b>检索质量</b>；而检索不是查一个向量库，是按"匹配需求"对多种介质取数——需求多样，所以介质和方法必须<b>组合</b>。而这一切的输入，是被处理过的数据：把大量原料，用<b>人工初筛 → 技术处理 → 人工质检</b>，提炼成又纯又对的那几 G 精华。
+  </div>
+
+</div>
+</body>
+</html>
